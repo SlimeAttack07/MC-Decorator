@@ -18,8 +18,8 @@ public class DisassemblyTableScreen extends AbstractContainerScreen<DisassemblyT
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
-        int x = (width - imageWidth) / 2;
-        int y = (height - imageHeight) / 2;
+        int x = (width - imageWidth) / 2;   // imageWidth = 176 if not overridden here.
+        int y = (height - imageHeight) / 2; // imageHeight = 166 if not overridden here.
 
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
         renderProgressArrow(guiGraphics, x, y);
