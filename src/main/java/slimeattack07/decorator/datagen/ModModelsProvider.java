@@ -1,4 +1,4 @@
-package slimeattack07.salvager.datagen;
+package slimeattack07.decorator.datagen;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -15,18 +15,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jspecify.annotations.NonNull;
-import slimeattack07.salvager.Salvager;
-import slimeattack07.salvager.block.ModBlocks;
-import slimeattack07.salvager.block.staged.StagedBlock;
-import slimeattack07.salvager.item.ModItems;
-import slimeattack07.salvager.util.ResourceUtils;
+import slimeattack07.decorator.Decorator;
+import slimeattack07.decorator.block.ModBlocks;
+import slimeattack07.decorator.item.ModItems;
+import slimeattack07.decorator.util.ResourceUtils;
 
 import java.util.stream.Stream;
 
 public class ModModelsProvider extends ModelProvider {
 
     public ModModelsProvider(PackOutput output) {
-        super(output, Salvager.MOD_ID);
+        super(output, Decorator.MOD_ID);
     }
 
     @Override
@@ -36,11 +35,11 @@ public class ModModelsProvider extends ModelProvider {
 
         // Blocks.
         generateSidesSameTopDifferent(ModBlocks.DISASSEMBLY_TABLE.get(), blockModels);
-        blockModels.createTrivialCube(ModBlocks.PLACE_STRUCTURE.get());
+//        blockModels.createTrivialCube(ModBlocks.PLACE_STRUCTURE.get());
 
         // Block states.
-        generateStagedModels(ModBlocks.STAGED3.get(), "staged3", blockModels);
-        generateStagedModels(ModBlocks.STAGED5.get(), "staged5", blockModels);
+//        generateStagedModels(ModBlocks.STAGED3.get(), "staged3", blockModels);
+//        generateStagedModels(ModBlocks.STAGED5.get(), "staged5", blockModels);
     }
 
     @Override
@@ -65,21 +64,21 @@ public class ModModelsProvider extends ModelProvider {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(ModelTemplates.CUBE.create(block, texturemapping, blockModels.modelOutput))));
     }
 
-    private void generateStagedModels(StagedBlock stagedBlock, String id, BlockModelGenerators blockModels){
-        generateStagedModels(stagedBlock, id, stagedBlock.getStageProperty(), 1, stagedBlock.getStages(), blockModels);
-        blockModels.registerSimpleItemModel(stagedBlock, ModelLocationUtils.getModelLocation(stagedBlock, "_stage_1"));
-    }
+//    private void generateStagedModels(StagedBlock stagedBlock, String id, BlockModelGenerators blockModels){
+//        generateStagedModels(stagedBlock, id, stagedBlock.getStageProperty(), 1, stagedBlock.getStages(), blockModels);
+//        blockModels.registerSimpleItemModel(stagedBlock, ModelLocationUtils.getModelLocation(stagedBlock, "_stage_1"));
+//    }
+//
+//    private void generateStagedModels(Block block, String id, IntegerProperty property, int minValue, int maxValue, BlockModelGenerators blockModels){
+//        var modelDispatch = PropertyDispatch.initial(property);
+//
+//        for(int i = minValue; i <= maxValue; i++)
+//            modelDispatch = modelDispatch.select(i, variantOfExistingModel("block/" + id + "_" + property.getName() + "_" + i));
+//
+//        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(modelDispatch).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+//    }
 
-    private void generateStagedModels(Block block, String id, IntegerProperty property, int minValue, int maxValue, BlockModelGenerators blockModels){
-        var modelDispatch = PropertyDispatch.initial(property);
-
-        for(int i = minValue; i <= maxValue; i++)
-            modelDispatch = modelDispatch.select(i, variantOfExistingModel("block/" + id + "_" + property.getName() + "_" + i));
-
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(modelDispatch).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
-    }
-
-    private MultiVariant variantOfExistingModel(String id){
-        return BlockModelGenerators.plainVariant(ResourceUtils.identifierOf(id));
-    }
+//    private MultiVariant variantOfExistingModel(String id){
+//        return BlockModelGenerators.plainVariant(ResourceUtils.identifierOf(id));
+//    }
 }

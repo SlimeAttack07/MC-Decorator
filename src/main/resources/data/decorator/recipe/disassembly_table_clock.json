@@ -1,0 +1,8 @@
+{
+  "type": "decorator:disassembly_table",
+  "ingredient": "minecraft:clock",
+  "result": {
+    "id": "minecraft:gold_nugget",
+	"count": 20
+  }
+}

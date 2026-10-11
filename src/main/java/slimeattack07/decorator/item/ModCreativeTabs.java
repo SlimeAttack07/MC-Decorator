@@ -16,17 +16,17 @@ public class ModCreativeTabs {
 
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Decorator.MOD_ID);
 
-    public static final Supplier<CreativeModeTab> SALVAGE_ITEMS = TABS.register("salvage_items_tab",
+    public static final Supplier<CreativeModeTab> SALVAGE_ITEMS = TABS.register("decorator_items_tab",
         () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.BROKEN_STICK.get()))
-        .title(Component.translatable("creativetab.salvager.salvage_items"))
+        .title(Component.translatable("creativetab.decorator.decorator_items"))
         .displayItems((parameters, output) -> {
             output.accept(ModItems.BROKEN_STICK);
         }).build());
 
-    public static final Supplier<CreativeModeTab> SALVAGE_MACHINES = TABS.register("salvage_machines_tab",
+    public static final Supplier<CreativeModeTab> SALVAGE_MACHINES = TABS.register("decorator_machines_tab",
         () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.DISASSEMBLY_TABLE))
-            .withTabsBefore(Identifier.fromNamespaceAndPath(Decorator.MOD_ID, "salvage_items_tab"))
-            .title(Component.translatable("creativetab.salvager.salvage_machines"))
+            .withTabsBefore(Identifier.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_items_tab"))
+            .title(Component.translatable("creativetab.decorator.decorator_machines"))
             .displayItems((parameters, output) -> {
                 output.accept(ModBlocks.DISASSEMBLY_TABLE);
 //                output.accept(ModBlocks.STAGED3);

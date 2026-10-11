@@ -1,0 +1,7 @@
+{
+  "type": "decorator:disassembly_table",
+  "ingredient": "minecraft:compass",
+  "result": {
+    "id": "minecraft:iron_ingot"
+  }
+}

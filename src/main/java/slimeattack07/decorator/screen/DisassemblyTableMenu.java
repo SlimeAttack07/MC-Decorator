@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import slimeattack07.decorator.block.ModBlocks;
 import slimeattack07.decorator.block.blockentities.DisassemblyTableBE;
 
@@ -46,8 +46,13 @@ public class DisassemblyTableMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        addSlot(new SlotItemHandler(blockEntity.itemHandler, 0, 54, 34));
-        addSlot(new SlotItemHandler(blockEntity.itemHandler, 1, 104, 34));
+        addSlot(new ResourceHandlerSlot(blockEntity.itemHandler, blockEntity.itemHandler::set, 0, 54, 34));
+        addSlot(new ResourceHandlerSlot(blockEntity.itemHandler, blockEntity.itemHandler::set, 1, 104, 34){
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false; // Extract only output slot.
+            }
+        });
         addDataSlots(data);
     }
 
@@ -76,7 +81,7 @@ public class DisassemblyTableMenu extends AbstractContainerMenu {
         // Check if the slot clicked is one of the vanilla container slots.
         if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
             // This is a vanilla container slot so merge the stack into the tile inventory
-            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT, false))
+            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX + 1, false))
                 return ItemStack.EMPTY;  // EMPTY_ITEM
         } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
             // This is a TE slot so merge the stack into the players inventory.

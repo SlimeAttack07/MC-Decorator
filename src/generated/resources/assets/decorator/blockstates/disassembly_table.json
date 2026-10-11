@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "decorator:block/disassembly_table"
+    }
+  }
+}

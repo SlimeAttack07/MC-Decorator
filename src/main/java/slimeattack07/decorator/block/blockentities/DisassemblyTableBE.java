@@ -22,20 +22,23 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jetbrains.annotations.Nullable;
 import slimeattack07.decorator.block.ModBlockEntities;
 import slimeattack07.decorator.recipe.DisassemblyTableRecipe;
 import slimeattack07.decorator.recipe.DisassemblyTableRecipeInput;
 import slimeattack07.decorator.recipe.ModRecipes;
 import slimeattack07.decorator.screen.DisassemblyTableMenu;
+import slimeattack07.decorator.util.ItemUtils;
 
 import java.util.Optional;
 
 public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
-    public final ItemStackHandler itemHandler = new ItemStackHandler(2) {
+    public final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(2) {
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             setChanged();
 
             if(!level.isClientSide())
@@ -80,7 +83,7 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.salvager.disassembly_table");
+        return Component.translatable("block.decorator.disassembly_table");
     }
 
     @Nullable
@@ -90,10 +93,10 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
     }
 
     public void drops() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        SimpleContainer inventory = new SimpleContainer(itemHandler.size());
 
-        for (int i = 0; i < itemHandler.getSlots(); i++)
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        for (int i = 0; i < itemHandler.size(); i++)
+            inventory.setItem(i, ItemUtils.getStackInSlot(itemHandler, i));
 
         Containers.dropContents(level, worldPosition, inventory);
     }
@@ -106,21 +109,21 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
 
-        tag.put("inventory", itemHandler.serializeNBT(registries));
-        tag.putInt("growth_chamber.progress", progress); // TODO change
-        tag.putInt("growth_chamber.max_progress", maxProgress);
+        itemHandler.serialize(output);
+        output.putInt("growth_chamber.progress", progress); // TODO change
+        output.putInt("growth_chamber.max_progress", maxProgress);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
 
-        itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
-        progress = tag.getInt("growth_chamber.progress"); // TODO change
-        maxProgress = tag.getInt("growth_chamber.max_progress");
+        itemHandler.deserialize(input);
+        progress = input.getIntOr("growth_chamber.progress", 0); // TODO change
+        maxProgress = input.getIntOr("growth_chamber.max_progress", 0);
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState) {
@@ -141,8 +144,8 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
         Optional<RecipeHolder<DisassemblyTableRecipe>> recipe = getCurrentRecipe();
         ItemStack output = recipe.get().value().output();
 
-        itemHandler.extractItem(INPUT_SLOT, 1, false);
-        itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(output.getItem(), itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + output.getCount()));
+        ItemUtils.extractFromSlot(itemHandler, INPUT_SLOT, 1);
+        ItemUtils.setStackInSlot(itemHandler, OUTPUT_SLOT, output.getItem(), ItemUtils.getAmountInSlot(itemHandler, OUTPUT_SLOT) + output.getCount());
     }
 
     private void resetProgress() {
@@ -170,20 +173,17 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
     }
 
     private Optional<RecipeHolder<DisassemblyTableRecipe>> getCurrentRecipe() {
-        return this.level.getRecipeManager()
-            .getRecipeFor(ModRecipes.DISASSEMBLY_TABLE_TYPE.get(), new DisassemblyTableRecipeInput(itemHandler.getStackInSlot(INPUT_SLOT)), level);
-    }
-
-        return ((ServerLevel) this.level).recipeAccess().getRecipeFor(ModRecipes.DISASSEMBLY_TABLE_TYPE.get(), new DisassemblyTableRecipeInput(itemHandler.getStackInSlot(INPUT_SLOT)), level);
+        return ((ServerLevel) this.level).recipeAccess().getRecipeFor(ModRecipes.DISASSEMBLY_TABLE_TYPE.get(),
+            new DisassemblyTableRecipeInput(ItemUtils.getStackInSlot(itemHandler, INPUT_SLOT)), level);
     }
 
     private boolean canInsertItemIntoOutputSlot(ItemStack output) {
-        return itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || itemHandler.getStackInSlot(OUTPUT_SLOT).getItem() == output.getItem();
+        return ItemUtils.isSlotEmpty(itemHandler, OUTPUT_SLOT) || ItemUtils.isSameItem(itemHandler, OUTPUT_SLOT, output.getItem());
     }
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
-        int maxCount = itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() ? 64 : itemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
-        int currentCount = itemHandler.getStackInSlot(OUTPUT_SLOT).getCount();
+        int maxCount = ItemUtils.getMaxStackSize(itemHandler, OUTPUT_SLOT, 64);
+        int currentCount = ItemUtils.getAmountInSlot(itemHandler, OUTPUT_SLOT);
 
         return maxCount >= currentCount + count;
     }

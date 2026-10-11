@@ -1,4 +1,4 @@
-package slimeattack07.salvager.datagen;
+package slimeattack07.decorator.datagen;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -6,11 +6,11 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import slimeattack07.salvager.Salvager;
+import slimeattack07.decorator.Decorator;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = Salvager.MOD_ID)
+@EventBusSubscriber(modid = Decorator.MOD_ID)
 public class DataGenerators {
 
     @SubscribeEvent
@@ -20,7 +20,6 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(true, new ModModelsProvider(packOutput));
-        generator.addProvider(true, new ModLootTableProvider(packOutput, lookupProvider));
     }
 
     @SubscribeEvent
@@ -30,6 +29,5 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(true, new ModModelsProvider(packOutput));
-        generator.addProvider(true, new ModLootTableProvider(packOutput, lookupProvider));
     }
 }

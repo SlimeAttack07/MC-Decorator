@@ -1,0 +1,7 @@
+{
+  "type": "decorator:disassembly_table",
+  "ingredient": "decorator:broken_stick",
+  "result": {
+    "id": "minecraft:stick"
+  }
+}
