@@ -23,8 +23,8 @@ public class DisassemblyTableScreen extends AbstractContainerScreen<DisassemblyT
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, GUI_TEXTURE);
 
-        int x = (width - imageWidth) / 2;
-        int y = (height - imageHeight) / 2;
+        int x = (width - imageWidth) / 2;   // imageWidth = 176 if not overridden here.
+        int y = (height - imageHeight) / 2; // imageHeight = 166 if not overridden here.
 
         guiGraphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
         renderProgressArrow(guiGraphics, x, y);

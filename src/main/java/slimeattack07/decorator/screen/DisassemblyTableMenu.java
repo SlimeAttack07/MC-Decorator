@@ -119,4 +119,8 @@ public class DisassemblyTableMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i)
             addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
     }
+
+    // Note to self: Slots are 18x18 (16x16 for item with some spacing around it).
+    // For placement, take coordinates of which pixel (starting top left) of your GUI it should start on.
+    // Don't include screen size, that's done automatically. You use the inner 16x16's top left as the coordinate!
 }
