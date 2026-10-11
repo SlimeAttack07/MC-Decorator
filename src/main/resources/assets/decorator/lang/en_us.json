@@ -1,0 +1,19 @@
+{
+  "creativetab.decorator.decorator_items": "Decorator Items",
+  "creativetab.decorator.decorator_machines": "Decorator Machines",
+
+  "item.decorator.broken_stick": "Broken Stick",
+  "item.decorator.disassembly_table": "Disassembly Table",
+
+  "block.decorator.disassembly_table": "Disassembly Table",
+
+  "tooltip.decorator.broken_stick": "A broken stick.",
+
+  "decorator.configuration.title": "Example Mod Configs",
+  "decorator.configuration.section.decorator.common.toml": "Example Mod Configs",
+  "decorator.configuration.section.decorator.common.toml.title": "Example Mod Configs",
+  "decorator.configuration.items": "Item List",
+  "decorator.configuration.logDirtBlock": "Log Dirt Block",
+  "decorator.configuration.magicNumberIntroduction": "Magic Number Text",
+  "decorator.configuration.magicNumber": "Magic Number"
+}

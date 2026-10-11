@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
@@ -80,7 +79,7 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.salvager.disassembly_table");
+        return Component.translatable("block.decorator.disassembly_table");
     }
 
     @Nullable
@@ -96,13 +95,6 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
 
         Containers.dropContents(level, worldPosition, inventory);
-    }
-
-    @Override
-    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        drops();
-
-        super.preRemoveSideEffects(pos, state);
     }
 
     @Override
@@ -172,9 +164,6 @@ public class DisassemblyTableBE extends BlockEntity implements MenuProvider {
     private Optional<RecipeHolder<DisassemblyTableRecipe>> getCurrentRecipe() {
         return this.level.getRecipeManager()
             .getRecipeFor(ModRecipes.DISASSEMBLY_TABLE_TYPE.get(), new DisassemblyTableRecipeInput(itemHandler.getStackInSlot(INPUT_SLOT)), level);
-    }
-
-        return ((ServerLevel) this.level).recipeAccess().getRecipeFor(ModRecipes.DISASSEMBLY_TABLE_TYPE.get(), new DisassemblyTableRecipeInput(itemHandler.getStackInSlot(INPUT_SLOT)), level);
     }
 
     private boolean canInsertItemIntoOutputSlot(ItemStack output) {

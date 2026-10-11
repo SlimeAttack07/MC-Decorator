@@ -31,6 +31,17 @@ public record DisassemblyTableRecipe(Ingredient inputItem, ItemStack output) imp
         return output.copy();
     }
 
+
+    @Override
+    public boolean canCraftInDimensions(int i, int i1) {
+        return true;
+    }
+
+    @Override
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
+        return output;
+    }
+
     @Override
     public RecipeSerializer<? extends Recipe<DisassemblyTableRecipeInput>> getSerializer() {
         return ModRecipes.DISASSEMBLY_TABLE_SERIALIZER.get();
@@ -39,16 +50,6 @@ public record DisassemblyTableRecipe(Ingredient inputItem, ItemStack output) imp
     @Override
     public RecipeType<? extends Recipe<DisassemblyTableRecipeInput>> getType() {
         return ModRecipes.DISASSEMBLY_TABLE_TYPE.get();
-    }
-
-    @Override
-    public PlacementInfo placementInfo() {
-        return PlacementInfo.create(inputItem);
-    }
-
-    @Override
-    public RecipeBookCategory recipeBookCategory() {
-        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     public static class Serializer implements RecipeSerializer<DisassemblyTableRecipe> {

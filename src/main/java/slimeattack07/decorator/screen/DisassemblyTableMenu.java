@@ -47,7 +47,12 @@ public class DisassemblyTableMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         addSlot(new SlotItemHandler(blockEntity.itemHandler, 0, 54, 34));
-        addSlot(new SlotItemHandler(blockEntity.itemHandler, 1, 104, 34));
+        addSlot(new SlotItemHandler(blockEntity.itemHandler, 1, 104, 34){
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false; // Extract only output slot.
+            }
+        });
         addDataSlots(data);
     }
 
@@ -76,7 +81,7 @@ public class DisassemblyTableMenu extends AbstractContainerMenu {
         // Check if the slot clicked is one of the vanilla container slots.
         if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
             // This is a vanilla container slot so merge the stack into the tile inventory
-            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT, false))
+            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX + 1, false))
                 return ItemStack.EMPTY;  // EMPTY_ITEM
         } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
             // This is a TE slot so merge the stack into the players inventory.

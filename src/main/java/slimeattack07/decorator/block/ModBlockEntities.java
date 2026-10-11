@@ -14,7 +14,7 @@ public class ModBlockEntities {
         DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Decorator.MOD_ID);
 
     public static final Supplier<BlockEntityType<DisassemblyTableBE>> DISASSEMBLY_TABLE_BE = BLOCK_ENTITIES.register("disassembly_table_be",
-        () -> new BlockEntityType<>(DisassemblyTableBE::new, ModBlocks.DISASSEMBLY_TABLE.get()));
+        () -> BlockEntityType.Builder.of(DisassemblyTableBE::new, ModBlocks.DISASSEMBLY_TABLE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
