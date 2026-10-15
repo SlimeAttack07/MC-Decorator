@@ -12,10 +12,12 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 import slimeattack07.decorator.block.ModBlockEntities;
 import slimeattack07.decorator.block.ModBlocks;
+import slimeattack07.decorator.item.HasTooltip;
 import slimeattack07.decorator.item.ModCreativeTabs;
 import slimeattack07.decorator.item.ModItems;
 import slimeattack07.decorator.recipe.ModRecipes;
@@ -78,6 +80,12 @@ public class Decorator {
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(ModMenuTypes.DISASSEMBLY_TABLE_MENU.get(), DisassemblyTableScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void onItemTooltip(ItemTooltipEvent event) {
+            if (event.getItemStack().getItem() instanceof HasTooltip hasTooltip)
+                hasTooltip.addToTooltip(event.getToolTip());
         }
     }
 }

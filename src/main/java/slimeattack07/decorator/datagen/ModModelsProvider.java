@@ -10,6 +10,7 @@ import net.minecraft.client.data.models.model.*;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -30,8 +31,12 @@ public class ModModelsProvider extends ModelProvider {
 
     @Override
     protected void registerModels(@NonNull BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        System.out.println("REGISTERING ITEMS NOW");
         // Items.
-        itemModels.generateFlatItem(ModItems.BROKEN_STICK.get(), ModelTemplates.FLAT_ITEM);
+        ModItems.ITEMS.getEntries().forEach(entry -> {
+            if(!(entry.get() instanceof BlockItem))
+                itemModels.generateFlatItem(entry.get(), ModelTemplates.FLAT_ITEM);
+        });
 
         // Blocks.
         generateSidesSameTopDifferent(ModBlocks.DISASSEMBLY_TABLE.get(), blockModels);

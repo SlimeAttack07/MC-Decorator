@@ -1,0 +1,6 @@
+{
+  "replace": false,
+  "values": [
+    "decorator:gray_printing_paste"
+  ]
+}

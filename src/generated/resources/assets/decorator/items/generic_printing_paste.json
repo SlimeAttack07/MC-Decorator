@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "decorator:item/generic_printing_paste"
+  }
+}

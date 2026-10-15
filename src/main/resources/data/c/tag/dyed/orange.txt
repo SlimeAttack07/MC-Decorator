@@ -1,0 +1,6 @@
+{
+  "replace": false,
+  "values": [
+    "decorator:orange_printing_paste"
+  ]
+}

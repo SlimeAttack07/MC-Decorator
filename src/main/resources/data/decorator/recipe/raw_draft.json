@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "decorator:drafting_paper",
+	"minecraft:ink_sac",
+	"minecraft:feather"
+  ],
+  "result": {
+    "count": 1,
+    "id": "decorator:raw_draft"
+  }
+}
