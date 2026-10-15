@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {"item": "minecraft:clay_ball"},
+	{"tag": "c:glass_panes"},
+	{"tag": "c:dyes/orange"},
+	{"tag": "c:dyes/orange"},
+	{"tag": "c:dyes/orange"},
+	{"tag": "c:dyes/orange"}
+  ],
+  "result": {
+    "count": 1,
+    "id": "decorator:scan_template"
+  }
+}

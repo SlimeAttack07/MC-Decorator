@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {"item": "minecraft:paper"},
+	{"item": "minecraft:paper"},
+	{"item": "minecraft:paper"},
+    {"tag": "c:dyes/cyan"},
+	{"tag": "c:dyes/cyan"},
+	{"tag": "c:dyes/cyan"}
+  ],
+  "result": {
+    "count": 1,
+    "id": "decorator:drafting_paper"
+  }
+}
