@@ -1,6 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "decorator:yellow_printing_paste"
-  ]
-}

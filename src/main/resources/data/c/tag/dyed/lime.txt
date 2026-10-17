@@ -1,6 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "decorator:lime_printing_paste"
-  ]
-}

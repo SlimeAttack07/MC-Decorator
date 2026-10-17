@@ -1,6 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "decorator:light_blue_printing_paste"
-  ]
-}

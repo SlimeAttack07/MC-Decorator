@@ -15,6 +15,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(ModBlocks.DISASSEMBLY_TABLE);
+        blockWithItem(ModBlocks.DRAFTING_TABLE);
     }
 
     private void blockWithItem(DeferredBlock<?> deferredBlock) {

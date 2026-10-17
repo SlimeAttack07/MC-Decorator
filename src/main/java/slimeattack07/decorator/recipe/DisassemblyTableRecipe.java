@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 public record DisassemblyTableRecipe(Ingredient inputItem, ItemStack output) implements Recipe<DisassemblyTableRecipeInput> {
-    // inputItem & output ==> Read From JSON File!
+    // draftInput & output ==> Read From JSON File!
     // DisassemblyTableRecipeInput --> INVENTORY of the Block Entity
 
     public NonNullList<Ingredient> getIngredients() {

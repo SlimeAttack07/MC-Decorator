@@ -20,6 +20,7 @@ import slimeattack07.decorator.item.ModCreativeTabs;
 import slimeattack07.decorator.item.ModItems;
 import slimeattack07.decorator.recipe.ModRecipes;
 import slimeattack07.decorator.screen.DisassemblyTableScreen;
+import slimeattack07.decorator.screen.DraftingTableScreen;
 import slimeattack07.decorator.screen.ModMenuTypes;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -77,6 +78,7 @@ public class Decorator {
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(ModMenuTypes.DISASSEMBLY_TABLE_MENU.get(), DisassemblyTableScreen::new);
+            event.register(ModMenuTypes.DRAFTING_TABLE_MENU.get(), DraftingTableScreen::new);
         }
     }
 }

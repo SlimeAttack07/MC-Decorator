@@ -20,6 +20,9 @@ public class ModBlocks {
     public static final DeferredBlock<DisassemblyTable> DISASSEMBLY_TABLE = registerBlock("disassembly_table",
         () -> new DisassemblyTable(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
+    public static final DeferredBlock<DraftingTable> DRAFTING_TABLE = registerBlock("drafting_table",
+        () -> new DraftingTable(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);
     }

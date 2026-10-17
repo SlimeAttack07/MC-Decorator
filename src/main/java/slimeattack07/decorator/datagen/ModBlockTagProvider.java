@@ -18,6 +18,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.DISASSEMBLY_TABLE.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.DISASSEMBLY_TABLE.get(), ModBlocks.DRAFTING_TABLE.get());
     }
 }

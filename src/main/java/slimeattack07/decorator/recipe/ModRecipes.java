@@ -9,10 +9,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import slimeattack07.decorator.Decorator;
 
 public class ModRecipes {
-    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
-        DeferredRegister.create(Registries.RECIPE_SERIALIZER, Decorator.MOD_ID);
-    public static final DeferredRegister<RecipeType<?>> TYPES =
-        DeferredRegister.create(Registries.RECIPE_TYPE, Decorator.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Decorator.MOD_ID);
+    public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, Decorator.MOD_ID);
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DisassemblyTableRecipe>> DISASSEMBLY_TABLE_SERIALIZER =
         SERIALIZERS.register("disassembly_table", DisassemblyTableRecipe.Serializer::new);
@@ -24,6 +22,15 @@ public class ModRecipes {
             }
         });
 
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DraftingTableRecipe>> DRAFTING_TABLE_SERIALIZER =
+        SERIALIZERS.register("drafting_table", DraftingTableRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<DraftingTableRecipe>> DRAFTING_TABLE_TYPE =
+        TYPES.register("drafting_table", () -> new RecipeType<DraftingTableRecipe>() {
+            @Override
+            public String toString() {
+                return "drafting_table";
+            }
+        });
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

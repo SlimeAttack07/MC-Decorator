@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import slimeattack07.decorator.Decorator;
 
 public class DisassemblyTableScreen extends AbstractContainerScreen<DisassemblyTableMenu> {
-    private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/disassembly_table_gui/disassembly_table_gui.png");
+    private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/disassembly_table_gui.png");
     private static final ResourceLocation ARROW_TEXTURE = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/arrow_progress.png");
 
     public DisassemblyTableScreen(DisassemblyTableMenu menu, Inventory playerInventory, Component title) {

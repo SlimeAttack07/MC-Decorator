@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "decorator:block/drafting_table"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 {
   "values": [
-    "decorator:disassembly_table"
+    "decorator:disassembly_table",
+    "decorator:drafting_table"
   ]
 }

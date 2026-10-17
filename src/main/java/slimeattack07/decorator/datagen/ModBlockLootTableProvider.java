@@ -17,6 +17,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(ModBlocks.DISASSEMBLY_TABLE.get());
+        dropSelf(ModBlocks.DRAFTING_TABLE.get());
     }
 
     @Override

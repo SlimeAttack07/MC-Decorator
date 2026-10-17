@@ -1,6 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "decorator:purple_printing_paste"
-  ]
-}
