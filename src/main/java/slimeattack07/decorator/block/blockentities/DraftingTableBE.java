@@ -139,13 +139,15 @@ public class DraftingTableBE extends AbstractMachineBE {
         return lastRecipe;
     }
 
-    private boolean canInsertItemIntoOutputSlot(ItemStack output) { // TODO: Check if this handles NBT correctly.
+    private boolean canInsertItemIntoOutputSlot(ItemStack output) {
         return itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || itemHandler.getStackInSlot(OUTPUT_SLOT).getItem().equals(output.getItem());
     }
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
-        int maxCount = itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() ? 64 : itemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
-        int currentCount = itemHandler.getStackInSlot(OUTPUT_SLOT).getCount();
+        ItemStack currentOutput = itemHandler.getStackInSlot(OUTPUT_SLOT);
+
+        int maxCount = currentOutput.isEmpty() ? 64 : currentOutput.getMaxStackSize();
+        int currentCount = currentOutput.getCount();
 
         return maxCount >= currentCount + count;
     }

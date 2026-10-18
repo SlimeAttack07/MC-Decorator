@@ -72,7 +72,7 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
 
         @Override
         public boolean isItemValid(int slot, ItemStack itemStack) {
-            return slot < getFirstOutputSlot();
+            return slot < getFirstOutputSlot() && mayInsert(itemStack, slot);
         }
     };
 

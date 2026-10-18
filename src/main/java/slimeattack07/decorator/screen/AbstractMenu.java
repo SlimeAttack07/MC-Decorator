@@ -122,10 +122,8 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
                 List<Tuple<Integer, Integer>> ranges = computeRanges(sourceStack);
                 boolean moved = false;
 
-                for(Tuple<Integer, Integer> range : ranges) {
-                    System.out.println("Using range " + range.getA() + " to " + range.getB() + " (excluding end itself)");
+                for(Tuple<Integer, Integer> range : ranges)
                     moved |= moveItemStackTo(sourceStack, range.getA(), range.getB(), insertsReversed()); // Bitwise OR to ensure all calls run.
-                }
 
                 if (!moved)
                     return ItemStack.EMPTY;

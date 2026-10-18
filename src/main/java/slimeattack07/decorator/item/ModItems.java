@@ -54,6 +54,6 @@ public class ModItems {
     }
 
     private static DeferredItem<Item> registerTierFocusItem(String registryId, DecorationTier tier){
-        return ITEMS.register(registryId, () -> new TierFocustem(new Item.Properties(), registryId, tier));
+        return ITEMS.register(registryId, () -> new TierFocusItem(new Item.Properties(), registryId, tier));
     }
 }

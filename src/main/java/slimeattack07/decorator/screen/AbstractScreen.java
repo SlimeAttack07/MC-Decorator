@@ -1,9 +1,7 @@
 package slimeattack07.decorator.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,10 +29,6 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, guiTexture);
-
         int x = (width - imageWidth) / 2;   // imageWidth = 176 if not overridden here.
         int y = (height - imageHeight) / 2; // imageHeight = 166 if not overridden here.
 
