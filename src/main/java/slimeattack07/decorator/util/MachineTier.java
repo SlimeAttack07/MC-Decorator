@@ -1,5 +1,9 @@
 package slimeattack07.decorator.util;
 
+import net.minecraft.ChatFormatting;
+
+import java.util.stream.Stream;
+
 public enum MachineTier {
     BASIC,
     EXPERIENCED,
@@ -38,7 +42,21 @@ public enum MachineTier {
         };
     }
 
+    public ChatFormatting getColor(){
+        return switch(this){
+            case BASIC -> ChatFormatting.WHITE;
+            case EXPERIENCED -> ChatFormatting.AQUA;
+            case EXPERT -> ChatFormatting.GREEN;
+            case MASTER -> ChatFormatting.DARK_PURPLE;
+            case LEGEND -> ChatFormatting.GOLD;
+        };
+    }
+
     public static MachineTier[] reversed(){
         return new MachineTier[]{LEGEND, MASTER, EXPERT, EXPERIENCED, BASIC};
+    }
+
+    public static MachineTier toTier(int experience){
+        return Stream.of(MachineTier.reversed()).filter(entry -> entry.hasReachedTier(experience)).findFirst().orElse(MachineTier.BASIC);
     }
 }

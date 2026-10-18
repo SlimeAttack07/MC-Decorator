@@ -11,7 +11,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "decorator:drafting_table"
+          "name": "decorator:drafting_table",
+		  "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "source": "block_entity",
+              "include": [
+                "decorator:experience"
+              ]
+            }
+          ]
         }
       ],
       "rolls": 1.0

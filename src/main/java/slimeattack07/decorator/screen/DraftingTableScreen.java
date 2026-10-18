@@ -3,6 +3,7 @@ package slimeattack07.decorator.screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 import slimeattack07.decorator.Decorator;
 
 public class DraftingTableScreen extends AbstractScreen<DraftingTableMenu> {
@@ -23,5 +24,10 @@ public class DraftingTableScreen extends AbstractScreen<DraftingTableMenu> {
     @Override
     protected SlotLocation getProgressIconTopLeft() {
         return new SlotLocation(72, 34);
+    }
+
+    @Override
+    protected SlotLocation getWarningIconTopLeft() {
+        return new SlotLocation(116, 26);
     }
 }

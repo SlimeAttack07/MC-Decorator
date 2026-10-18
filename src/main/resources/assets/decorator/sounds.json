@@ -1,0 +1,14 @@
+{
+	"drafting_table_crafting": {
+		"subtitle": "sounds.decorator.drafting_table_crafting",
+		"sounds": [
+			"decorator:drafting_table_crafting"
+		]
+	}, 
+	"drafting_table_finished": {
+		"subtitle": "sounds.decorator.drafting_table_finished",
+		"sounds": [
+			"decorator:drafting_table_finished"
+		]
+	}
+}

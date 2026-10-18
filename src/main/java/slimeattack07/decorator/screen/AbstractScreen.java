@@ -17,6 +17,7 @@ import slimeattack07.decorator.util.MachineTier;
 public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractContainerScreen<T> {
     private final ResourceLocation guiTexture = getGuiTexture();
     private final ResourceLocation progressIconTexture = getProgressIconTexture();
+    private final ResourceLocation warningIconTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/warning.png");
 
     private static final ResourceLocation basicMachineTierTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/basic.png");
     private static final ResourceLocation experiencedMachineTierTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/experienced.png");
@@ -40,6 +41,7 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
         guiGraphics.blit(guiTexture, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
         renderProgressArrow(guiGraphics, x, y);
         renderTier(guiGraphics, x, y);
+        renderWarningIcon(guiGraphics, x, y);
     }
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
@@ -69,6 +71,13 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
         }
     }
 
+    private void renderWarningIcon(GuiGraphics guiGraphics, int x, int y){
+        if(menu.showWarningIcon()){
+            SlotLocation location = getWarningIconTopLeft();
+            guiGraphics.blit(warningIconTexture,x + location.x(), y + location.y(), 0, 0, 16, 16, 16, 16);
+        }
+    }
+
     private void renderTierBar(GuiGraphics guiGraphics, int x, int y){
         MachineTier tier = menu.getCurrentMachineTier();
     }
@@ -90,4 +99,6 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
     protected abstract ResourceLocation getProgressIconTexture();
 
     protected abstract SlotLocation getProgressIconTopLeft();
+
+    protected abstract SlotLocation getWarningIconTopLeft();
 }

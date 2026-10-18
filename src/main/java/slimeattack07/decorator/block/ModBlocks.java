@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import slimeattack07.decorator.Decorator;
+import slimeattack07.decorator.item.MachineBlockItem;
 import slimeattack07.decorator.item.ModItems;
 
 import java.util.function.Supplier;
@@ -20,7 +21,7 @@ public class ModBlocks {
     public static final DeferredBlock<DisassemblyTable> DISASSEMBLY_TABLE = registerBlock("disassembly_table",
         () -> new DisassemblyTable(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
-    public static final DeferredBlock<DraftingTable> DRAFTING_TABLE = registerBlock("drafting_table",
+    public static final DeferredBlock<DraftingTable> DRAFTING_TABLE = registerMachineBlock("drafting_table",
         () -> new DraftingTable(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static void register(IEventBus eventBus){
@@ -35,6 +36,17 @@ public class ModBlocks {
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> dBlock = BLOCKS.register(name, block);
         registerBlockItem(name, dBlock);
+
+        return dBlock;
+    }
+
+    private static <T extends Block> void registerMachineBlockItem(String name, DeferredBlock<T> block){
+        ModItems.ITEMS.register(name, () -> new MachineBlockItem(block.get(), new Item.Properties()));
+    }
+
+    private static <T extends Block> DeferredBlock<T> registerMachineBlock(String name, Supplier<T> block){
+        DeferredBlock<T> dBlock = BLOCKS.register(name, block);
+        registerMachineBlockItem(name, dBlock);
 
         return dBlock;
     }

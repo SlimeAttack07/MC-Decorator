@@ -9,19 +9,23 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 import slimeattack07.decorator.block.ModBlockEntities;
 import slimeattack07.decorator.block.ModBlocks;
+import slimeattack07.decorator.block.blockentities.DraftingTableBE;
+import slimeattack07.decorator.component.ModDataComponents;
 import slimeattack07.decorator.item.ModCreativeTabs;
 import slimeattack07.decorator.item.ModItems;
 import slimeattack07.decorator.recipe.ModRecipes;
 import slimeattack07.decorator.screen.DisassemblyTableScreen;
 import slimeattack07.decorator.screen.DraftingTableScreen;
 import slimeattack07.decorator.screen.ModMenuTypes;
+import slimeattack07.decorator.sound.ModSounds;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Decorator.MOD_ID)
@@ -36,6 +40,7 @@ public class Decorator {
     public Decorator(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading.
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::registerCapabilities);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
@@ -47,9 +52,8 @@ public class Decorator {
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
-
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
+        ModDataComponents.register(modEventBus);
+        ModSounds.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -59,12 +63,8 @@ public class Decorator {
 
     }
 
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-//        if(event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)) {
-//            event.accept(ModItems.BROKEN_STICK);
-//            event.accept(ModBlocks.DISASSEMBLY_TABLE);
-//        }
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.DRAFTING_TABLE_BE.get(), DraftingTableBE::getAutomationHandler);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

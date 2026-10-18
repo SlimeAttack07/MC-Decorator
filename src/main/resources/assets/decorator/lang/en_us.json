@@ -74,6 +74,14 @@
   "focus.decorator.group_focus.ship": "Ship Focus %1$s",
   "focus.decorator.group_focus.structure": "Structure Focus %1$s",
   
+  "experience.decorator.machine.basic": "Basic (%1$s xp)",
+  "experience.decorator.machine.experienced": "Experienced (%1$s xp)",
+  "experience.decorator.machine.expert": "Expert (%1$s xp)",
+  "experience.decorator.machine.master": "Master (%1$s xp)",
+  "experience.decorator.machine.legend": "Legend (%1$s xp)",
+  
+  "sounds.decorator.drafting_table_crafting": "Drafting Table works on draft",
+  "sounds.decorator.drafting_table_finished": "Drafting Table finished drafting",
 
   "decorator.configuration.title": "Example Mod Configs",
   "decorator.configuration.section.decorator.common.toml": "Example Mod Configs",

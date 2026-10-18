@@ -11,13 +11,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import slimeattack07.decorator.Decorator;
-import slimeattack07.decorator.block.ModBlocks;
-import slimeattack07.decorator.block.blockentities.AbstractBE;
+import slimeattack07.decorator.block.blockentities.AbstractMachineBE;
 import slimeattack07.decorator.util.MachineTier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public abstract class AbstractMenu extends AbstractContainerMenu {
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -35,7 +33,7 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
-    public final AbstractBE blockEntity;
+    public final AbstractMachineBE blockEntity;
     private final Level level;
     protected final ContainerData data;
 
@@ -44,12 +42,12 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
     private MachineTier lastTier = MachineTier.BASIC;
 
     public AbstractMenu(MenuType<?> menuType, int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(menuType, pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
+        this(menuType, pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public AbstractMenu(MenuType<?> menuType, int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(menuType, pContainerId);
-        this.blockEntity = ((AbstractBE) entity);
+        this.blockEntity = ((AbstractMachineBE) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -59,17 +57,17 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
         for(int i = 0; i < getInputSlotCount(); i++){
             final int index = i; // Needed because the anonymous class requires it to be final.
             SlotLocation location = getLocationOfSlot(index);
-            addSlot(new SlotItemHandler(blockEntity.itemHandler, index, location.x(), location.y()){
+            addSlot(new SlotItemHandler(blockEntity.getItemHandler(), index, location.x(), location.y()){
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return mayInsert(stack, index);
+                    return blockEntity.mayInsert(stack, index);
                 }
             });
         }
 
         for(int i = getInputSlotCount(); i < getInputSlotCount() + getOutputSlotCount(); i++){
             SlotLocation location = getLocationOfSlot(i);
-            addSlot(new OutputSlotHandler(blockEntity.itemHandler, i, location.x(), location.y()));
+            addSlot(new OutputSlotHandler(blockEntity.getItemHandler(), i, location.x(), location.y()));
         }
 
         addDataSlots(data);
@@ -87,13 +85,17 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
         int experience = data.get(2);
 
         if(experience != lastExperience)
-            lastTier = Stream.of(MachineTier.reversed()).filter(entry -> entry.hasReachedTier(experience)).findFirst().orElse(MachineTier.BASIC);
+            lastTier = MachineTier.toTier(experience);
 
         return lastTier;
     }
 
     public boolean hasExperience(){
         return data.get(2) > 0;
+    }
+
+    public boolean showWarningIcon(){
+        return data.get(3) > 0;
     }
 
     public int getHeightOfTierTexture(){
@@ -120,8 +122,10 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
                 List<Tuple<Integer, Integer>> ranges = computeRanges(sourceStack);
                 boolean moved = false;
 
-                for(Tuple<Integer, Integer> range : ranges)
-                    moved |= moveItemStackTo(sourceStack, range.getA(), range.getB(), false); // Bitwise OR to ensure all calls run.
+                for(Tuple<Integer, Integer> range : ranges) {
+                    System.out.println("Using range " + range.getA() + " to " + range.getB() + " (excluding end itself)");
+                    moved |= moveItemStackTo(sourceStack, range.getA(), range.getB(), insertsReversed()); // Bitwise OR to ensure all calls run.
+                }
 
                 if (!moved)
                     return ItemStack.EMPTY;
@@ -162,9 +166,9 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
         int slotIndex = TE_INVENTORY_FIRST_SLOT_INDEX;
 
         for(int i = 0; i < getInputSlotCount(); i++){
-            if(mayInsert(stack, i)){
+            if(blockEntity.mayInsert(stack, i)){
                 if(currentTuple == null) // If not keeping track of a tuple yet, make a new tuples.
-                    currentTuple = new Tuple<>(slotIndex, slotIndex + i); // Tuples for ranges are (N, N - 1), meaning the last index is excluded.
+                    currentTuple = new Tuple<>(slotIndex, slotIndex + 1); // Tuples for ranges are (N, N - 1), meaning the last index is excluded.
                 else
                     currentTuple.setB(currentTuple.getB() + 1); // Still in current range, so extend by one.
             } else{ // May not insert, so add the current tuple to the list if we're currently tracking one.
@@ -200,6 +204,10 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
             addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
     }
 
+    protected boolean insertsReversed(){
+        return false;
+    }
+
     // ABSTRACT METHODS ========================
     /** Is the menu currently crafting?
      *
@@ -228,14 +236,6 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
      * @return
      */
     protected abstract SlotLocation getLocationOfSlot(int slot);
-
-    /** Is it allowed to move the given ItemStack to this slot? You only need to specify whether it's allowed, checking for space is already done by this class.
-     *
-     * @param itemStack
-     * @param slot
-     * @return
-     */
-    protected abstract boolean mayInsert(ItemStack itemStack, int slot);
 
     /** Return the block registration this menu belongs to.
      *
