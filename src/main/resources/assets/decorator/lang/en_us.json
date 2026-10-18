@@ -25,10 +25,17 @@
   "item.decorator.purple_printing_paste": "Purple Printing Paste",
   "item.decorator.magenta_printing_paste": "Magenta Printing Paste",
   "item.decorator.pink_printing_paste": "Pink Printing Paste",
+  "item.decorator.modest_tier_focus": "Modest Tier Focus",
+  "item.decorator.grand_tier_focus": "Grand Tier Focus",
+  "item.decorator.superb_tier_focus": "Superb Tier Focus",
+  "item.decorator.majestic_tier_focus": "Majestic Tier Focus",
+  "item.decorator.supreme_tier_focus": "Supreme Tier Focus",
 
   "item.decorator.disassembly_table": "Disassembly Table",
+  "item.decorator.drafting_table": "Drafting Table",
 
   "block.decorator.disassembly_table": "Disassembly Table",
+  "block.decorator.drafting_table": "Drafting Table",
 
   "tooltip.decorator.raw_draft": "Put this in a Drafting Table to refine it. You can use group or tier focus items to increase your odds of receiving Decoration Instructions from your selected group or tier when revealing the Refined Draft.",
   "tooltip.decorator.refined_draft": "Press [%1$s] while holding a Refined Draft to reveal Decoration Instructions.",
@@ -52,7 +59,29 @@
   "tooltip.decorator.purple_printing_paste": "Put inside a smart 3D printer to enable printing decorations that require the color 'Purple'.",
   "tooltip.decorator.magenta_printing_paste": "Put inside a smart 3D printer to enable printing decorations that require the color 'Magenta'.",
   "tooltip.decorator.pink_printing_paste": "Put inside a smart 3D printer to enable printing decorations that require the color 'Pink'.",
+  "tooltip.decorator.modest_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
+  "tooltip.decorator.grand_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
+  "tooltip.decorator.superb_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
+  "tooltip.decorator.majestic_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
+  "tooltip.decorator.supreme_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
   
+  "focus.decorator.tier_focus.modest": "Modest Focus %1$s",
+  "focus.decorator.tier_focus.grand": "Grand Focus %1$s",
+  "focus.decorator.tier_focus.superb": "Superb Focus %1$s",
+  "focus.decorator.tier_focus.majestic": "Majestic Focus %1$s",
+  "focus.decorator.tier_focus.supreme": "Supreme Focus %1$s",
+  
+  "focus.decorator.group_focus.ship": "Ship Focus %1$s",
+  "focus.decorator.group_focus.structure": "Structure Focus %1$s",
+  
+  "experience.decorator.machine.basic": "Basic (%1$s xp)",
+  "experience.decorator.machine.experienced": "Experienced (%1$s xp)",
+  "experience.decorator.machine.expert": "Expert (%1$s xp)",
+  "experience.decorator.machine.master": "Master (%1$s xp)",
+  "experience.decorator.machine.legend": "Legend (%1$s xp)",
+  
+  "sounds.decorator.drafting_table_crafting": "Drafting Table works on draft",
+  "sounds.decorator.drafting_table_finished": "Drafting Table finished drafting",
 
   "decorator.configuration.title": "Example Mod Configs",
   "decorator.configuration.section.decorator.common.toml": "Example Mod Configs",

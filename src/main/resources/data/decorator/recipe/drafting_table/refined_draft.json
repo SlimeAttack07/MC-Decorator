@@ -1,0 +1,7 @@
+{
+  "type": "decorator:drafting_table",
+  "draftInput": "decorator:raw_draft",
+  "result": {
+    "id": "decorator:refined_draft"
+  }
+}

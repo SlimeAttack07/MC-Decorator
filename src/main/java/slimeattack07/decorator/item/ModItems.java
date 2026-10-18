@@ -5,9 +5,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import slimeattack07.decorator.Decorator;
+import slimeattack07.decorator.util.DecorationTier;
 import slimeattack07.decorator.util.ResourceUtils;
-
-import javax.tools.Tool;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Decorator.MOD_ID);
@@ -36,6 +35,12 @@ public class ModItems {
     public static final DeferredItem<Item> MAGENTA_PRINTING_PASTE = registerTooltippedItem("magenta_printing_paste");
     public static final DeferredItem<Item> PINK_PRINTING_PASTE = registerTooltippedItem("pink_printing_paste");
 
+    public static final DeferredItem<Item> MODEST_TIER_FOCUS = registerTierFocusItem("modest_tier_focus", DecorationTier.MODEST);
+    public static final DeferredItem<Item> GRAND_TIER_FOCUS = registerTierFocusItem("grand_tier_focus", DecorationTier.GRAND);
+    public static final DeferredItem<Item> SUPERB_TIER_FOCUS = registerTierFocusItem("superb_tier_focus", DecorationTier.SUPERB);
+    public static final DeferredItem<Item> MAJESTIC_TIER_FOCUS = registerTierFocusItem("majestic_tier_focus", DecorationTier.MAJESTIC);
+    public static final DeferredItem<Item> SUPREME_TIER_FOCUS = registerTierFocusItem("supreme_tier_focus", DecorationTier.SUPREME);
+
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
     }
@@ -46,5 +51,9 @@ public class ModItems {
 
     private static DeferredItem<Item> registerTooltippedItem(String registryId){
         return ITEMS.register(registryId, () -> new TooltippedItem(new Item.Properties().setId(ResourceUtils.genId(registryId)), registryId));
+    }
+
+    private static DeferredItem<Item> registerTierFocusItem(String registryId, DecorationTier tier) {
+        return ITEMS.register(registryId, () -> new TierFocusItem(new Item.Properties().setId(ResourceUtils.genId(registryId)), registryId, tier));
     }
 }

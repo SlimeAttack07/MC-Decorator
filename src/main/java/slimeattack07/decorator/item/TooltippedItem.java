@@ -3,6 +3,7 @@ package slimeattack07.decorator.item;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import slimeattack07.decorator.Decorator;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class TooltippedItem extends Item implements HasTooltip{
     }
 
     @Override
-    public void addToTooltip(List<Component> tooltip) {
+    public void addToTooltip(List<Component> tooltip, ItemStack stack) {
         tooltip.add(Component.translatable(registryId).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
     }
 }

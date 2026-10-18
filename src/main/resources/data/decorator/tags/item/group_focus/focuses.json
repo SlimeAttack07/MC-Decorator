@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#decorator:group_focus/ship",
+	"#decorator:group_focus/structure"
+  ]
+}

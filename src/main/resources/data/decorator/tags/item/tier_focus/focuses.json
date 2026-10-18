@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#decorator:tier_focus/modest",
+	"#decorator:tier_focus/grand",
+	"#decorator:tier_focus/superb",
+	"#decorator:tier_focus/majestic",
+	"#decorator:tier_focus/supreme"
+  ]
+}
