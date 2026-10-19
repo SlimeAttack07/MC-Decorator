@@ -55,14 +55,14 @@ public class DraftingTableBE extends AbstractMachineBE {
         CompoundTag expectedTag = new CompoundTag();
         boolean newStack = false;
 
-        if(stack.equals(ItemStack.EMPTY)){
+        if(stack.isEmpty()){
             stack = new ItemStack(output.getItem());
             newStack = true;
         }
 
         ItemStack groupFocus = ItemUtils.getStackInSlot(itemHandler, GROUP_FOCUS_INPUT_SLOT);
 
-        if(!groupFocus.equals(ItemStack.EMPTY)){
+        if(!groupFocus.isEmpty()){
             groupFocus.getTags().filter(entry -> !entry.equals(ModTags.Items.GROUP_FOCUSES) &&
                 entry.location().getNamespace().equals(Decorator.MOD_ID) && entry.location().getPath().contains("group_focus")).findFirst().ifPresent(groupTag -> {
                 expectedTag.putString("group_focus", groupTag.location().toString());
@@ -71,12 +71,18 @@ public class DraftingTableBE extends AbstractMachineBE {
         }
 
         ItemStack tierFocus = ItemUtils.getStackInSlot(itemHandler, TIER_FOCUS_INPUT_SLOT);
-        if(!tierFocus.equals(ItemStack.EMPTY)){
+        if(!tierFocus.isEmpty()){
             tierFocus.getTags().filter(entry -> !entry.equals(ModTags.Items.TIER_FOCUSES) &&
                 entry.location().getNamespace().equals(Decorator.MOD_ID) && entry.location().getPath().contains("tier_focus")).findFirst().ifPresent(groupTag -> {
                 expectedTag.putString("tier_focus", groupTag.location().toString());
                 expectedTag.putDouble("tier_chance", chance);
             });
+        }
+
+        if(tierFocus.isEmpty() || chance < 100){
+            CompoundTag distributionTag = new CompoundTag();
+            getCurrentMachineTier().getDistribution().forEach((key, value) -> distributionTag.putDouble(key.name(), value));
+            expectedTag.put("distribution", distributionTag);
         }
 
         // Check if we can actually craft by checking if the applied group & tier focus are compatible with whatever is already in the output.

@@ -11,6 +11,7 @@ import slimeattack07.decorator.Decorator;
 import slimeattack07.decorator.util.DecorationTier;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class RefinedDraftItem extends Item implements HasTooltip{
     private final String registryId;
@@ -38,7 +39,8 @@ public class RefinedDraftItem extends Item implements HasTooltip{
                 double groupChance = tag.getDouble("group_chance").orElse(0d);
                 ChatFormatting color = groupChance >= 50 ? ChatFormatting.GREEN : ChatFormatting.RED;
                 tooltip.add(Component.translatable("focus.decorator.group_focus." + groupName, Component.literal(groupChance + "%").withStyle(color)));
-            }
+            } else
+                tooltip.add(Component.translatable("focus.decorator.no_group_focus"));
 
             if(!tierFocus.isBlank()){
                 String[] parts = tierFocus.split("/");
@@ -49,6 +51,17 @@ public class RefinedDraftItem extends Item implements HasTooltip{
                 ChatFormatting color = tier == null ? ChatFormatting.RESET : tier.getColor();
                 tooltip.add(Component.translatable("focus.decorator.tier_focus." + tierName, Component.literal(tierChance + "%").withStyle(percentageColor))
                     .withStyle(color));
+            }
+
+            CompoundTag distribution = tag.getCompoundOrEmpty("distribution");
+
+            if(!distribution.isEmpty()){
+                tooltip.add(Component.translatable(tierFocus.isBlank() ? "focus.decorator.no_tier_focus" : "focus.decorator.if_tier_focus_fails"));
+                Stream.of(DecorationTier.values()).forEach(entry -> {
+                    Double value = distribution.getDoubleOr(entry.name(), 0d);
+                    tooltip.add(Component.translatable("focus.decorator.tier_chance." + entry.name().toLowerCase(), Component.literal(value + "%"))
+                        .withStyle(entry.getColor()));
+                });
             }
         }
     }

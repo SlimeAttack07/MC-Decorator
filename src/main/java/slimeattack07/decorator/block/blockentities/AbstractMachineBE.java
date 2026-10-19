@@ -41,6 +41,7 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
             if(!level.isClientSide()) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 failureCooldown = 0;
+                noRecipeCooldown = 0;
             }
         }
 
@@ -118,12 +119,13 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
     private int maxProgress = getMaxProgress();
     private int progress = 0;
     private int experience = 0;
+    private int nextSoundAt = 0; // Don't need to save this.
 
     // Caching for performance.
     private MachineTier lastTier = MachineTier.BASIC;
     private int lastExperience;
     private int failureCooldown = 0; // Doesn't need to be saved to block entity.
-    private int nextSoundAt = 0;
+    private int noRecipeCooldown = 0;
 
     public AbstractMachineBE(BlockPos pos, BlockState blockState, BlockEntityType<?> type) {
         super(type, pos, blockState);
@@ -233,6 +235,12 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState) {
+        if(noRecipeCooldown > 0) { // Couldn't find a recipe last time and no slot has updated, so it'll still not find a recipe. Stop early.
+            noRecipeCooldown--;
+
+            return;
+        }
+
         if(hasRecipe()) {
             if(failureCooldown > 0)
                 failureCooldown--;
@@ -249,14 +257,17 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
                         failureCooldown = 1200; // As long as the slots don't change, it'll always fail so we use a cooldown to lighten the load.
                 }
             }
-        } else
+        } else {
             resetProgress();
+            noRecipeCooldown = 1200;
+        }
     }
 
     private void resetProgress() {
         progress = 0;
         maxProgress = getMaxProgress();
         nextSoundAt = 0;
+        noRecipeCooldown = 0;
     }
 
     private boolean hasCraftingFinished() {
@@ -269,7 +280,7 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
 
             if(progress > nextSoundAt) {
                 level.playSound(null, pos, getCraftingInProgessSound(), SoundSource.BLOCKS, .25F, 1);
-                nextSoundAt += 100;
+                nextSoundAt = progress + 100;
             }
         }
     }

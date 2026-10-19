@@ -2,6 +2,8 @@ package slimeattack07.decorator.util;
 
 import net.minecraft.ChatFormatting;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public enum MachineTier {
@@ -49,6 +51,17 @@ public enum MachineTier {
             case EXPERT -> ChatFormatting.GREEN;
             case MASTER -> ChatFormatting.DARK_PURPLE;
             case LEGEND -> ChatFormatting.GOLD;
+        };
+    }
+
+    public LinkedHashMap<DecorationTier, Double> getDistribution(){
+        return switch (this){
+            case BASIC -> new LinkedHashMap<>(Map.of(DecorationTier.MODEST, 55d, DecorationTier.GRAND, 25d, DecorationTier.SUPERB, 12d, DecorationTier.MAJESTIC, 6d, DecorationTier.SUPREME, 2d));
+            case EXPERIENCED -> new LinkedHashMap<>(Map.of(DecorationTier.MODEST, 48d, DecorationTier.GRAND, 24d, DecorationTier.SUPERB, 14d, DecorationTier.MAJESTIC, 9d, DecorationTier.SUPREME, 5d));
+            case EXPERT -> new LinkedHashMap<>(Map.of(DecorationTier.MODEST, 40d, DecorationTier.GRAND, 22d, DecorationTier.SUPERB, 16d, DecorationTier.MAJESTIC, 12d, DecorationTier.SUPREME, 10d));
+            case MASTER -> new LinkedHashMap<>(Map.of(DecorationTier.MODEST, 30d, DecorationTier.GRAND, 21d, DecorationTier.SUPERB, 18d, DecorationTier.MAJESTIC, 16d, DecorationTier.SUPREME, 15d));
+            case LEGEND -> new LinkedHashMap<>(Map.of(DecorationTier.MODEST, 20d, DecorationTier.GRAND, 20d, DecorationTier.SUPERB, 20d, DecorationTier.MAJESTIC, 20d, DecorationTier.SUPREME, 20d));
+            default -> new LinkedHashMap<>();
         };
     }
 
