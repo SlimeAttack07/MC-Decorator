@@ -65,14 +65,23 @@
   "tooltip.decorator.majestic_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
   "tooltip.decorator.supreme_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
   
+  "focus.decorator.no_tier_focus": "Created without tier focus, these are the odds for picking each decoration tier:",
+  "focus.decorator.if_tier_focus_fails": "If tier focus fails to apply, these are the odds for picking each decoration tier:",
   "focus.decorator.tier_focus.modest": "Modest Focus %1$s",
   "focus.decorator.tier_focus.grand": "Grand Focus %1$s",
   "focus.decorator.tier_focus.superb": "Superb Focus %1$s",
   "focus.decorator.tier_focus.majestic": "Majestic Focus %1$s",
   "focus.decorator.tier_focus.supreme": "Supreme Focus %1$s",
   
+  "focus.decorator.no_group_focus": "Created without group focus, all groups have an equal chance of being picked.",
   "focus.decorator.group_focus.ship": "Ship Focus %1$s",
   "focus.decorator.group_focus.structure": "Structure Focus %1$s",
+  
+  "focus.decorator.tier_chance.modest": "Modest Decoration: %1$s",
+  "focus.decorator.tier_chance.grand": "Grand Decoration: %1$s",
+  "focus.decorator.tier_chance.superb": "Superb Decoration: %1$s",
+  "focus.decorator.tier_chance.majestic": "Majestic Decoration: %1$s",
+  "focus.decorator.tier_chance.supreme": "Supreme Decoration: %1$s",
   
   "experience.decorator.machine.basic": "Basic (%1$s xp)",
   "experience.decorator.machine.experienced": "Experienced (%1$s xp)",
