@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "decorator:decoration_instructions",
+	"minecraft:oak_button",
+	"minecraft:wooden_shovel",
+	"minecraft:wooden_sword"
+  ]
+}
