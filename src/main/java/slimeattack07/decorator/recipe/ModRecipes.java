@@ -15,7 +15,7 @@ public class ModRecipes {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DisassemblyTableRecipe>> DISASSEMBLY_TABLE_SERIALIZER =
         SERIALIZERS.register("disassembly_table", DisassemblyTableRecipe.Serializer::new);
     public static final DeferredHolder<RecipeType<?>, RecipeType<DisassemblyTableRecipe>> DISASSEMBLY_TABLE_TYPE =
-        TYPES.register("disassembly_table", () -> new RecipeType<DisassemblyTableRecipe>() {
+        TYPES.register("disassembly_table", () -> new RecipeType<>() {
             @Override
             public String toString() {
                 return "disassembly_table";
@@ -25,10 +25,20 @@ public class ModRecipes {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DraftingTableRecipe>> DRAFTING_TABLE_SERIALIZER =
         SERIALIZERS.register("drafting_table", DraftingTableRecipe.Serializer::new);
     public static final DeferredHolder<RecipeType<?>, RecipeType<DraftingTableRecipe>> DRAFTING_TABLE_TYPE =
-        TYPES.register("drafting_table", () -> new RecipeType<DraftingTableRecipe>() {
+        TYPES.register("drafting_table", () -> new RecipeType<>() {
             @Override
             public String toString() {
                 return "drafting_table";
+            }
+        });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DecorationCrafterRecipe>> DECORATION_CRAFTER_SERIALIZER =
+        SERIALIZERS.register("decoration_crafter", DecorationCrafterRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<DecorationCrafterRecipe>> DECORATION_CRAFTER_TYPE =
+        TYPES.register("decoration_crafter", () -> new RecipeType<>() {
+            @Override
+            public String toString() {
+                return "decoration_crafter";
             }
         });
 

@@ -19,6 +19,9 @@ public class ModMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<DraftingTableMenu>> DRAFTING_TABLE_MENU =
         registerMenuType("drafting_table_menu", DraftingTableMenu::new);
 
+    public static final DeferredHolder<MenuType<?>, MenuType<DecorationCrafterMenu>> DECORATION_CRAFTER_MENU =
+        registerMenuType("decoration_crafter_menu", DecorationCrafterMenu::new);
+
     private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IMenuTypeExtension.create(factory));
     }

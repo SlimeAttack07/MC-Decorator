@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 
 public record DraftingTableRecipe(Ingredient draftInput, ItemStack output) implements Recipe<DraftingTableRecipeInput> {
+    @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> list = NonNullList.create();
         list.add(draftInput);

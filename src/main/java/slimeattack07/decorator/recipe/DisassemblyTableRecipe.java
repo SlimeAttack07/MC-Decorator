@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 public record DisassemblyTableRecipe(Ingredient inputItem, ItemStack output) implements Recipe<DisassemblyTableRecipeInput> {
     // draftInput & output ==> Read From JSON File!
     // DisassemblyTableRecipeInput --> INVENTORY of the Block Entity
-
+    @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> list = NonNullList.create();
         list.add(inputItem);

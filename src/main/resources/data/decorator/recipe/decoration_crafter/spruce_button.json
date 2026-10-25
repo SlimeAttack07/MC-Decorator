@@ -1,0 +1,34 @@
+{
+  "type": "decorator:decoration_crafter",
+  "instructions": {
+		  "item":  "minecraft:wooden_sword"
+	},
+  "inputsOne": [
+	  {
+		  "item":  "minecraft:spruce_planks",
+		  "count": 1
+	  }
+  ], 
+  "inputsTwo": [
+	  {
+		  "item":  "minecraft:spruce_planks",
+		  "count": 1
+	  }
+  ],
+  "inputsThree": [
+	  {
+		  "item":  "minecraft:spruce_planks",
+		  "count": 1
+	  }
+  ],
+  "inputsFour": [
+	  {
+		  "item":  "minecraft:spruce_planks",
+		  "count": 1
+	  }
+  ],
+  "stepDuration": 200,
+  "result": {
+    "id": "minecraft:spruce_button"
+  }
+}

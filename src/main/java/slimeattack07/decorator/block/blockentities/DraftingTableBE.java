@@ -4,26 +4,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import slimeattack07.decorator.Decorator;
 import slimeattack07.decorator.block.ModBlockEntities;
-import slimeattack07.decorator.recipe.*;
+import slimeattack07.decorator.recipe.DraftingTableRecipe;
+import slimeattack07.decorator.recipe.DraftingTableRecipeInput;
+import slimeattack07.decorator.recipe.ModRecipes;
 import slimeattack07.decorator.screen.DraftingTableMenu;
 import slimeattack07.decorator.sound.ModSounds;
 import slimeattack07.decorator.util.ModTags;
-
-import java.util.LinkedHashMap;
-import java.util.Optional;
 
 public class DraftingTableBE extends AbstractMachineBE {
     private static final int DRAFT_INPUT_SLOT = 0;
@@ -52,9 +47,12 @@ public class DraftingTableBE extends AbstractMachineBE {
             return false; // Shouldn't happen here, but just in case.
 
         ItemStack output = recipe.output();
-        int chance = getCurrentMachineTier().getFocusChance();
-
         ItemStack stack = itemHandler.getStackInSlot(OUTPUT_SLOT);
+
+        if(!isBasicCompatible(stack, output))
+            return false; // Something else is obstructing the output.
+
+        int chance = getCurrentMachineTier().getFocusChance();
         CompoundTag expectedTag = new CompoundTag();
         boolean newStack = false;
 
@@ -94,18 +92,10 @@ public class DraftingTableBE extends AbstractMachineBE {
             if(!expectedTag.isEmpty())
                 stack.set(DataComponents.CUSTOM_DATA, CustomData.of(expectedTag));
         } else{
-            Object stackCustomDataObject = stack.getComponents().getOrDefault(DataComponents.CUSTOM_DATA, new CompoundTag());
-
-            if(stackCustomDataObject instanceof CustomData customData)
-                stackCustomDataObject = customData.copyTag();
-
-            if(stackCustomDataObject instanceof CompoundTag stackTag){
-                if((!stackTag.isEmpty() || !expectedTag.isEmpty()) && !stackTag.equals(expectedTag))
-                    return false; // This will trigger a cooldown for performance.
-                else
-                    stack.setCount(stack.getCount() + output.getCount());
-            } else
-                return false; // It's not a CompoundTag, meaning it's present as something else since we didn't get an empty tag and therefore we probably can't merge the item.
+            if(isAdvancedCompatible(stack, output, expectedTag))
+                stack.setCount(stack.getCount() + output.getCount());
+            else
+                return false; // The current output is the same item but has different NBT, so we can't create the new output.
         }
 
         if(!expectedTag.isEmpty())
@@ -123,12 +113,7 @@ public class DraftingTableBE extends AbstractMachineBE {
     protected boolean hasRecipe() {
         DraftingTableRecipe recipe = getCurrentRecipe();
 
-        if(recipe == null)
-            return false;
-
-        ItemStack output = recipe.output();
-
-        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+        return getCurrentRecipe() != null;
     }
 
     private DraftingTableRecipe getCurrentRecipe() {
@@ -144,19 +129,6 @@ public class DraftingTableBE extends AbstractMachineBE {
             .ifPresentOrElse(holder -> lastRecipe = holder.value(), () -> lastRecipe = null);
 
         return lastRecipe;
-    }
-
-    private boolean canInsertItemIntoOutputSlot(ItemStack output) {
-        return itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || itemHandler.getStackInSlot(OUTPUT_SLOT).getItem().equals(output.getItem());
-    }
-
-    private boolean canInsertAmountIntoOutputSlot(int count) {
-        ItemStack currentOutput = itemHandler.getStackInSlot(OUTPUT_SLOT);
-
-        int maxCount = currentOutput.isEmpty() ? 64 : currentOutput.getMaxStackSize();
-        int currentCount = currentOutput.getCount();
-
-        return maxCount >= currentCount + count;
     }
 
     @Override
@@ -180,7 +152,7 @@ public class DraftingTableBE extends AbstractMachineBE {
     }
 
     @Override
-    protected SoundEvent getCraftingInProgessSound() {
+    protected SoundEvent getCraftingInProgressSound() {
         return ModSounds.DRAFTING_TABLE_CRAFTING.get();
     }
 

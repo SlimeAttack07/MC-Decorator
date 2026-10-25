@@ -1,6 +1,5 @@
 package slimeattack07.decorator.screen;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -41,10 +40,6 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
     private int lastExperience = 0;
     private MachineTier lastTier = MachineTier.BASIC;
 
-    public AbstractMenu(MenuType<?> menuType, int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(menuType, pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
-    }
-
     public AbstractMenu(MenuType<?> menuType, int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(menuType, pContainerId);
         this.blockEntity = ((AbstractMachineBE) entity);
@@ -62,6 +57,11 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
                 public boolean mayPlace(ItemStack stack) {
                     return blockEntity.mayInsert(stack, index);
                 }
+
+                @Override
+                public boolean mayPickup(Player playerIn) {
+                    return blockEntity.mayExtract(index);
+                }
             });
         }
 
@@ -76,9 +76,9 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
     public int getScaledProgress() {
         int progress = data.get(0);
         int maxProgress = data.get(1);
-        int progessIconPixelSize = 32;
+        int progressIconPixelSize = 32;
 
-        return maxProgress != 0 && progress != 0 ? progress * progessIconPixelSize / maxProgress : 0;
+        return maxProgress != 0 && progress != 0 ? progress * progressIconPixelSize / maxProgress : 0;
     }
 
     public MachineTier getCurrentMachineTier(){
@@ -89,6 +89,7 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
 
         return lastTier;
     }
+
 
     public boolean hasExperience(){
         return data.get(2) > 0;
@@ -129,7 +130,7 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
             } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + getInputSlotCount() + getOutputSlotCount()) {
                 // This is a TE slot so merge the stack into the players inventory.
-                if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false))
+                if (!blockEntity.mayExtract(pIndex) || !moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false))
                     return ItemStack.EMPTY;
             } else {
                 System.out.println("Invalid slotIndex:" + pIndex);

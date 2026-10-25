@@ -22,6 +22,7 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
     private static final ResourceLocation expertMachineTierTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/expert.png");
     private static final ResourceLocation masterMachineTierTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/master.png");
     private static final ResourceLocation legendMachineTierTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/legend.png");
+    protected static final ResourceLocation lockTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/slot_locked.png");
 
     public AbstractScreen(T menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -38,7 +39,7 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
         renderWarningIcon(guiGraphics, x, y);
     }
 
-    private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
+    protected void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()){
             SlotLocation location = getProgressIconTopLeft();
             int textureHeight = menu.getScaledProgress();
@@ -70,10 +71,6 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
             SlotLocation location = getWarningIconTopLeft();
             guiGraphics.blit(warningIconTexture,x + location.x(), y + location.y(), 0, 0, 16, 16, 16, 16);
         }
-    }
-
-    private void renderTierBar(GuiGraphics guiGraphics, int x, int y){
-        MachineTier tier = menu.getCurrentMachineTier();
     }
 
     @Override

@@ -34,6 +34,7 @@ public class ModCreativeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(ModBlocks.DISASSEMBLY_TABLE);
                 output.accept(ModBlocks.DRAFTING_TABLE);
+                output.accept(ModBlocks.DECORATION_CRAFTER);
 //                output.accept(ModBlocks.STAGED3);
 //                output.accept(ModBlocks.STAGED5);
 //                output.accept(ModBlocks.PLACE_STRUCTURE);
