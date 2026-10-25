@@ -56,7 +56,7 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
 
         @Override
         public ItemStack getStackInSlot(int slot) {
-            return mayExtract(slot) ? itemHandler.getStackInSlot(slot) : ItemStack.EMPTY;
+            return itemHandler.getStackInSlot(slot);
         }
 
         @Override
@@ -111,11 +111,11 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
             @Override
             public void set(int i, int value) {
                 switch (i) {
-                    case 0: AbstractMachineBE.this.progress = value;
-                    case 1: AbstractMachineBE.this.maxProgress = value;
-                    case 2: AbstractMachineBE.this.experience = value;
-                    case 3: AbstractMachineBE.this.failureCooldown = value;
-                    default: setUnknownForContainerData(i, value);
+                    case 0 -> AbstractMachineBE.this.progress = value;
+                    case 1 -> AbstractMachineBE.this.maxProgress = value;
+                    case 2 -> AbstractMachineBE.this.experience = value;
+                    case 3 -> AbstractMachineBE.this.failureCooldown = value;
+                    default -> setUnknownForContainerData(i, value);
                 }
             }
 

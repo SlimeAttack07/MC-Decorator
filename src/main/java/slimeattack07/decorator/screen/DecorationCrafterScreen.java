@@ -40,7 +40,7 @@ public class DecorationCrafterScreen extends AbstractScreen<DecorationCrafterMen
 
     protected void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         int stage = menu.getStage();
-        
+
         if(menu.isCrafting() || stage > 1) {
             // We intentionally leave out breaks so that the correct amount of textures automatically draw based on stage by putting the cases in reversed order.
             switch (stage) {
@@ -52,13 +52,13 @@ public class DecorationCrafterScreen extends AbstractScreen<DecorationCrafterMen
         }
 
         if(stage > 1) // If stage > 1, first stage has been completed and instructions slot is locked until last stage completes.
-            guiGraphics.blit(lockTexture,x + 27, y + 55, 0, 0, 10, 14, 10, 14);
+            render(guiGraphics, lockTexture,x + 27, y + 55, 0, 0, 10, 14, 10, 14);
     }
 
     private void partialOrFull(GuiGraphics guiGraphics, int x, int y, ResourceLocation texture, int textureX, int textureY, int textureStage, int machineStage){
         boolean mustScale = textureStage == machineStage;
         int textureHeight = mustScale ? menu.getScaledProgress() : 14;
         int difference = 14 - textureHeight;
-        guiGraphics.blit(texture,x + textureX, y + textureY + difference, 0, difference, 25, textureHeight, 25, 14);
+        render(guiGraphics, texture,x + textureX, y + textureY + difference, 0, difference, 25, textureHeight, 25, 14);
     }
 }

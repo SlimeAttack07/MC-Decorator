@@ -33,7 +33,7 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
         int x = (width - imageWidth) / 2;   // imageWidth = 176 if not overridden here.
         int y = (height - imageHeight) / 2; // imageHeight = 166 if not overridden here.
 
-        guiGraphics.blit(guiTexture, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+        render(guiGraphics, guiTexture, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
         renderProgressArrow(guiGraphics, x, y);
         renderTier(guiGraphics, x, y);
         renderWarningIcon(guiGraphics, x, y);
@@ -44,7 +44,7 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
             SlotLocation location = getProgressIconTopLeft();
             int textureHeight = menu.getScaledProgress();
             int difference = 32 - textureHeight;
-            guiGraphics.blit(progressIconTexture,x + location.x(), y + location.y() + difference, 0, difference, 32, textureHeight, 32, 32);
+            render(guiGraphics, progressIconTexture,x + location.x(), y + location.y() + difference, 0, difference, 32, textureHeight, 32, 32);
         }
     }
 
@@ -62,15 +62,19 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
             SlotLocation location = getExpBarLocation();
             int textureHeight = menu.getHeightOfTierTexture();
             int difference = 60 - textureHeight;
-            guiGraphics.blit(texture,x + location.x(), y + location.y() + difference, 0, difference, 10, textureHeight, 10, 60);
+            render(guiGraphics, texture,x + location.x(), y + location.y() + difference, 0, difference, 10, textureHeight, 10, 60);
         }
     }
 
     private void renderWarningIcon(GuiGraphics guiGraphics, int x, int y){
         if(menu.showWarningIcon()){
             SlotLocation location = getWarningIconTopLeft();
-            guiGraphics.blit(warningIconTexture,x + location.x(), y + location.y(), 0, 0, 16, 16, 16, 16);
+            render(guiGraphics, warningIconTexture,x + location.x(), y + location.y(), 0, 0, 16, 16, 16, 16);
         }
+    }
+
+    protected void render(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, float uOffset, float vOffset, int width, int height, int textureWidth, int textureHeight){
+        guiGraphics.blit(texture,x, y, uOffset, vOffset, width, height, textureWidth, textureHeight);
     }
 
     @Override

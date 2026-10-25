@@ -90,7 +90,6 @@ public abstract class AbstractMenu extends AbstractContainerMenu {
         return lastTier;
     }
 
-
     public boolean hasExperience(){
         return data.get(2) > 0;
     }
