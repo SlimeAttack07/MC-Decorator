@@ -19,12 +19,14 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 import slimeattack07.decorator.block.ModBlockEntities;
 import slimeattack07.decorator.block.ModBlocks;
+import slimeattack07.decorator.block.blockentities.DecorationCrafterBE;
 import slimeattack07.decorator.block.blockentities.DraftingTableBE;
 import slimeattack07.decorator.component.ModDataComponents;
 import slimeattack07.decorator.item.HasTooltip;
 import slimeattack07.decorator.item.ModCreativeTabs;
 import slimeattack07.decorator.item.ModItems;
 import slimeattack07.decorator.recipe.ModRecipes;
+import slimeattack07.decorator.screen.DecorationCrafterScreen;
 import slimeattack07.decorator.screen.DisassemblyTableScreen;
 import slimeattack07.decorator.screen.DraftingTableScreen;
 import slimeattack07.decorator.screen.ModMenuTypes;
@@ -69,6 +71,7 @@ public class Decorator {
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntities.DRAFTING_TABLE_BE.get(), DraftingTableBE::getAutomationHandler);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntities.DECORATION_CRAFTER_BE.get(), DecorationCrafterBE::getAutomationHandler);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -83,6 +86,7 @@ public class Decorator {
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(ModMenuTypes.DISASSEMBLY_TABLE_MENU.get(), DisassemblyTableScreen::new);
             event.register(ModMenuTypes.DRAFTING_TABLE_MENU.get(), DraftingTableScreen::new);
+            event.register(ModMenuTypes.DECORATION_CRAFTER_MENU.get(), DecorationCrafterScreen::new);
         }
 
         @SubscribeEvent

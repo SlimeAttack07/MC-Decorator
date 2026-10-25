@@ -4,15 +4,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
@@ -24,13 +20,6 @@ import java.util.Map;
 
 public record DecorationCrafterRecipe(Ingredient instructions, List<SizedIngredient> inputsOne, List<SizedIngredient> inputsTwo, List<SizedIngredient> inputsThree,
         List<SizedIngredient> inputsFour, ItemStack output, int stepDuration) implements Recipe<DecorationCrafterRecipeInput> {
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.create();
-        list.add(instructions); // Don't use this method.
-
-        return list;
-    }
 
     @Override
     public boolean matches(DecorationCrafterRecipeInput recipeInput, Level level) {
@@ -77,7 +66,14 @@ public record DecorationCrafterRecipe(Ingredient instructions, List<SizedIngredi
         List<SizedIngredient> inputs = getStageInputs(stage);
         Map<ItemLike, Integer> countsMap = new HashMap<>();
         // We make an assumption that each 'ingredient' has exactly one stack, and we don't support tags for this machine.
-        inputs.forEach(input -> countsMap.merge(input.getItems()[0].getItem(), input.getItems()[0].getCount(), Integer::sum));
+        inputs.forEach(input -> {
+            Ingredient ingredient = input.ingredient();
+
+            if(ingredient.isCustom())
+                Decorator.LOGGER.warn("NeoForge doesn't support custom ingredients inside SizedIngredient, so this ingredient will never work correctly: " + ingredient);
+            else
+                countsMap.merge(ingredient.getValues().get(0).value(), input.count(), Integer::sum);
+        });
 
         return countsMap;
     }
@@ -85,16 +81,6 @@ public record DecorationCrafterRecipe(Ingredient instructions, List<SizedIngredi
     @Override
     public ItemStack assemble(DecorationCrafterRecipeInput recipeInput, HolderLookup.Provider provider) {
         return output.copy();
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int i, int i1) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return output;
     }
 
     @Override
@@ -107,13 +93,23 @@ public record DecorationCrafterRecipe(Ingredient instructions, List<SizedIngredi
         return ModRecipes.DECORATION_CRAFTER_TYPE.get();
     }
 
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(instructions);
+    }
+
     public static class Serializer implements RecipeSerializer<DecorationCrafterRecipe> {
         public static final MapCodec<DecorationCrafterRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.fieldOf("instructions").forGetter(DecorationCrafterRecipe::instructions),
-            SizedIngredient.FLAT_CODEC.listOf().fieldOf("inputsOne").forGetter(DecorationCrafterRecipe::inputsOne),
-            SizedIngredient.FLAT_CODEC.listOf().fieldOf("inputsTwo").forGetter(DecorationCrafterRecipe::inputsTwo),
-            SizedIngredient.FLAT_CODEC.listOf().fieldOf("inputsThree").forGetter(DecorationCrafterRecipe::inputsThree),
-            SizedIngredient.FLAT_CODEC.listOf().fieldOf("inputsFour").forGetter(DecorationCrafterRecipe::inputsFour),
+            SizedIngredient.NESTED_CODEC.listOf().fieldOf("inputsOne").forGetter(DecorationCrafterRecipe::inputsOne),
+            SizedIngredient.NESTED_CODEC.listOf().fieldOf("inputsTwo").forGetter(DecorationCrafterRecipe::inputsTwo),
+            SizedIngredient.NESTED_CODEC.listOf().fieldOf("inputsThree").forGetter(DecorationCrafterRecipe::inputsThree),
+            SizedIngredient.NESTED_CODEC.listOf().fieldOf("inputsFour").forGetter(DecorationCrafterRecipe::inputsFour),
             ItemStack.CODEC.fieldOf("result").forGetter(DecorationCrafterRecipe::output),
             Codec.INT.fieldOf("stepDuration").forGetter(DecorationCrafterRecipe::stepDuration)
         ).apply(inst, DecorationCrafterRecipe::new));

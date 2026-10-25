@@ -10,5 +10,35 @@
 		"sounds": [
 			"decorator:drafting_table_finished"
 		]
+	},
+	"decoration_crafter_crafting1": {
+		"subtitle": "sounds.decorator.decoration_crafter_crafting1",
+		"sounds": [
+			"decorator:decoration_crafter_crafting1"
+		]
+	}, 
+	"decoration_crafter_crafting2": {
+		"subtitle": "sounds.decorator.decoration_crafter_crafting2",
+		"sounds": [
+			"decorator:decoration_crafter_crafting2"
+		]
+	},
+	"decoration_crafter_crafting3": {
+		"subtitle": "sounds.decorator.decoration_crafter_crafting3",
+		"sounds": [
+			"decorator:decoration_crafter_crafting3"
+		]
+	},
+	"decoration_crafter_crafting4": {
+		"subtitle": "sounds.decorator.decoration_crafter_crafting4",
+		"sounds": [
+			"decorator:decoration_crafter_crafting4"
+		]
+	},
+	"decoration_crafter_finished": {
+		"subtitle": "sounds.decorator.decoration_crafter_finished",
+		"sounds": [
+			"decorator:decoration_crafter_finished"
+		]
 	}
 }

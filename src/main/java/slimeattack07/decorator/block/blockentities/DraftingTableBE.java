@@ -49,9 +49,12 @@ public class DraftingTableBE extends AbstractMachineBE {
             return false; // Shouldn't happen here, but just in case.
 
         ItemStack output = recipe.output();
-        int chance = getCurrentMachineTier().getFocusChance();
-
         ItemStack stack = ItemUtils.getStackInSlot(itemHandler, OUTPUT_SLOT);
+
+        if(!isBasicCompatible(stack, output))
+            return false; // Something else is obstructing the output.
+
+        int chance = getCurrentMachineTier().getFocusChance();
         CompoundTag expectedTag = new CompoundTag();
         boolean newStack = false;
 
@@ -91,18 +94,10 @@ public class DraftingTableBE extends AbstractMachineBE {
             if(!expectedTag.isEmpty())
                 stack.set(DataComponents.CUSTOM_DATA, CustomData.of(expectedTag));
         } else{
-            Object stackCustomDataObject = stack.getComponents().getOrDefault(DataComponents.CUSTOM_DATA, new CompoundTag());
-
-            if(stackCustomDataObject instanceof CustomData customData)
-                stackCustomDataObject = customData.copyTag();
-
-            if(stackCustomDataObject instanceof CompoundTag stackTag){
-                if((!stackTag.isEmpty() || !expectedTag.isEmpty()) && !stackTag.equals(expectedTag))
-                    return false; // This will trigger a cooldown for performance.
-                else
-                    stack.setCount(stack.getCount() + output.getCount());
-            } else
-                return false; // It's not a CompoundTag, meaning it's present as something else since we didn't get an empty tag and therefore we probably can't merge the item.
+            if(isAdvancedCompatible(stack, output, expectedTag))
+                stack.setCount(stack.getCount() + output.getCount());
+            else
+                return false; // The current output is the same item but has different NBT, so we can't create the new output.
         }
 
         if(!expectedTag.isEmpty())
@@ -118,14 +113,7 @@ public class DraftingTableBE extends AbstractMachineBE {
 
     @Override
     protected boolean hasRecipe() {
-        DraftingTableRecipe recipe = getCurrentRecipe();
-
-        if(recipe == null)
-            return false;
-
-        ItemStack output = recipe.output();
-
-        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+        return getCurrentRecipe() != null;
     }
 
     private DraftingTableRecipe getCurrentRecipe() {
@@ -141,21 +129,6 @@ public class DraftingTableBE extends AbstractMachineBE {
             .ifPresentOrElse(holder -> lastRecipe = holder.value(), () -> lastRecipe = null);
 
         return lastRecipe;
-    }
-
-    private boolean canInsertItemIntoOutputSlot(ItemStack output) {
-        ItemStack currentOutput = ItemUtils.getStackInSlot(itemHandler, OUTPUT_SLOT);
-
-        return currentOutput.isEmpty() || currentOutput.getItem().equals(output.getItem());
-    }
-
-    private boolean canInsertAmountIntoOutputSlot(int count) {
-        ItemStack currentOutput = ItemUtils.getStackInSlot(itemHandler, OUTPUT_SLOT);
-
-        int maxCount = currentOutput.isEmpty() ? 64 : currentOutput.getMaxStackSize();
-        int currentCount = currentOutput.getCount();
-
-        return maxCount >= currentCount + count;
     }
 
     @Override
@@ -179,7 +152,7 @@ public class DraftingTableBE extends AbstractMachineBE {
     }
 
     @Override
-    protected SoundEvent getCraftingInProgessSound() {
+    protected SoundEvent getCraftingInProgressSound() {
         return ModSounds.DRAFTING_TABLE_CRAFTING.get();
     }
 

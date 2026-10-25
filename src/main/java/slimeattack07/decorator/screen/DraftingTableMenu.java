@@ -3,17 +3,18 @@ package slimeattack07.decorator.screen;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import slimeattack07.decorator.block.ModBlocks;
 
 public class DraftingTableMenu extends AbstractMenu{
-    public DraftingTableMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.DRAFTING_TABLE_MENU.get(), pContainerId, inv, entity, data);
+    public DraftingTableMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData){
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
-    public DraftingTableMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData){
-        super(ModMenuTypes.DRAFTING_TABLE_MENU.get(), pContainerId, inv, extraData);
+    public DraftingTableMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.DRAFTING_TABLE_MENU.get(), pContainerId, inv, entity, data);
     }
 
     @Override

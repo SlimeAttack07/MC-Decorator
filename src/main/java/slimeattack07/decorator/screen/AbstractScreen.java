@@ -23,6 +23,7 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
     private static final Identifier expertMachineTierTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/expert.png");
     private static final Identifier masterMachineTierTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/master.png");
     private static final Identifier legendMachineTierTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/legend.png");
+    protected static final Identifier lockTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/slot_locked.png");
 
     public AbstractScreen(T menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -33,18 +34,18 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
         int x = (width - imageWidth) / 2;   // imageWidth = 176 if not overridden here.
         int y = (height - imageHeight) / 2; // imageHeight = 166 if not overridden here.
 
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, guiTexture, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+        render(guiGraphics, guiTexture, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
         renderProgressArrow(guiGraphics, x, y);
         renderTier(guiGraphics, x, y);
         renderWarningIcon(guiGraphics, x, y);
     }
 
-    private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
+    protected void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()){
             SlotLocation location = getProgressIconTopLeft();
             int textureHeight = menu.getScaledProgress();
             int difference = 32 - textureHeight;
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, progressIconTexture,x + location.x(), y + location.y() + difference, 0, difference, 32, textureHeight, 32, 32);
+            render(guiGraphics, progressIconTexture,x + location.x(), y + location.y() + difference, 0, difference, 32, textureHeight, 32, 32);
         }
     }
 
@@ -62,19 +63,19 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
             SlotLocation location = getExpBarLocation();
             int textureHeight = menu.getHeightOfTierTexture();
             int difference = 60 - textureHeight;
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture,x + location.x(), y + location.y() + difference, 0, difference, 10, textureHeight, 10, 60);
+            render(guiGraphics, texture,x + location.x(), y + location.y() + difference, 0, difference, 10, textureHeight, 10, 60);
         }
     }
 
     private void renderWarningIcon(GuiGraphics guiGraphics, int x, int y){
         if(menu.showWarningIcon()){
             SlotLocation location = getWarningIconTopLeft();
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, warningIconTexture,x + location.x(), y + location.y(), 0, 0, 16, 16, 16, 16);
+            render(guiGraphics, warningIconTexture,x + location.x(), y + location.y(), 0, 0, 16, 16, 16, 16);
         }
     }
 
-    private void renderTierBar(GuiGraphics guiGraphics, int x, int y){
-        MachineTier tier = menu.getCurrentMachineTier();
+    protected void render(GuiGraphics guiGraphics, Identifier texture, int x, int y, float uOffset, float vOffset, int width, int height, int textureWidth, int textureHeight){
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture,x, y, uOffset, vOffset, width, height, textureWidth, textureHeight);
     }
 
     @Override

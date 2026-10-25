@@ -1,29 +1,27 @@
 {
   "type": "decorator:decoration_crafter",
-  "instructions": {
-		  "item":  "minecraft:wooden_sword"
-	},
+  "instructions": "minecraft:wooden_sword",
   "inputsOne": [
 	  {
-		  "item":  "minecraft:spruce_planks",
+		  "ingredient":  "minecraft:spruce_planks",
 		  "count": 1
 	  }
   ], 
   "inputsTwo": [
 	  {
-		  "item":  "minecraft:spruce_planks",
+		  "ingredient":  "minecraft:spruce_planks",
 		  "count": 1
 	  }
   ],
   "inputsThree": [
 	  {
-		  "item":  "minecraft:spruce_planks",
+		  "ingredient":  "minecraft:spruce_planks",
 		  "count": 1
 	  }
   ],
   "inputsFour": [
 	  {
-		  "item":  "minecraft:spruce_planks",
+		  "ingredient":  "minecraft:spruce_planks",
 		  "count": 1
 	  }
   ],

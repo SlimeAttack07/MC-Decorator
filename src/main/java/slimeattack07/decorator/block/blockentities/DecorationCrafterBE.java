@@ -1,6 +1,7 @@
 package slimeattack07.decorator.block.blockentities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
@@ -8,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +19,7 @@ import slimeattack07.decorator.recipe.DecorationCrafterRecipeInput;
 import slimeattack07.decorator.recipe.ModRecipes;
 import slimeattack07.decorator.screen.DecorationCrafterMenu;
 import slimeattack07.decorator.sound.ModSounds;
+import slimeattack07.decorator.util.ItemUtils;
 import slimeattack07.decorator.util.ModTags;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class DecorationCrafterBE extends AbstractMachineBE{
             return false; // Shouldn't happen here, but just in case.
 
         ItemStack output = recipe.output();
-        ItemStack stack = itemHandler.getStackInSlot(OUTPUT_SLOT);
+        ItemStack stack = ItemUtils.getStackInSlot(itemHandler, OUTPUT_SLOT);
 
         // Only stage 4 actually produces output, so before that we don't have to do any checking for the output slot.
         if(stage >= 4){
@@ -82,12 +83,12 @@ public class DecorationCrafterBE extends AbstractMachineBE{
         Map<ItemLike, Integer> countsMap = recipe.getStageInputsAsMap(stage);
         // Consume the inputs by going from last to first material input slot. This leaves behind a neater inventory than doing it in normal order.
         for(int i = OUTPUT_SLOT - 1; i > INSTRUCTIONS_INPUT_SLOT; i--){
-            ItemStack materialStack = itemHandler.getStackInSlot(i);
+            ItemStack materialStack = ItemUtils.getStackInSlot(itemHandler, i);
             Integer requiredAmount = countsMap.get(materialStack.getItem());
 
             if(requiredAmount != null){ // If null, then this item is not required for the recipe we've just crafted.
                 int usedAmount = Math.min(materialStack.getCount(), requiredAmount);
-                itemHandler.extractItem(i, usedAmount, false);
+                ItemUtils.extractFromSlot(itemHandler, i, usedAmount);
                 countsMap.computeIfPresent(materialStack.getItem(), (key, oldRequired) -> {
                     int stillRequired = oldRequired - usedAmount;
 
@@ -98,7 +99,7 @@ public class DecorationCrafterBE extends AbstractMachineBE{
 
         if(countsMap.isEmpty()){
             if(stage >= 4){ // Final stage succeeded, create output.
-                itemHandler.setStackInSlot(OUTPUT_SLOT, stack);
+                ItemUtils.setStackInSlot(itemHandler, OUTPUT_SLOT, stack);
                 stage = 1;
             } else // This stage succeeded, but it's not the final stage. Don't create output, just increase stage.
                 stage++;
@@ -169,18 +170,18 @@ public class DecorationCrafterBE extends AbstractMachineBE{
         List<ItemStack> materialInputs = new ArrayList<>();
 
         for(int i = INSTRUCTIONS_INPUT_SLOT + 1; i < OUTPUT_SLOT; i++) {
-            ItemStack stack = itemHandler.getStackInSlot(i);
+            ItemStack stack = ItemUtils.getStackInSlot(itemHandler, i);
 
             if(!stack.isEmpty())
                 materialInputs.add(stack);
         }
 
-        DecorationCrafterRecipeInput recipeInput = new DecorationCrafterRecipeInput(itemHandler.getStackInSlot(INSTRUCTIONS_INPUT_SLOT), materialInputs, stage);
+        DecorationCrafterRecipeInput recipeInput = new DecorationCrafterRecipeInput(ItemUtils.getStackInSlot(itemHandler, INSTRUCTIONS_INPUT_SLOT), materialInputs, stage);
 
         if(lastRecipe != null && lastRecipe.matches(recipeInput, level)) // This already takes care of checking the correct stage because we pass it above  ^
             return lastRecipe;
 
-        level.getRecipeManager().getRecipeFor(ModRecipes.DECORATION_CRAFTER_TYPE.get(), recipeInput, level)
+        ((ServerLevel) this.level).recipeAccess().getRecipeFor(ModRecipes.DECORATION_CRAFTER_TYPE.get(), recipeInput, level)
             .ifPresentOrElse(holder -> lastRecipe = holder.value(), () -> lastRecipe = null);
 
         // Make sure to update the maxProgress when a new recipe is selected to prevent the first craft's stage 1 from using the wrong maxProgress value.

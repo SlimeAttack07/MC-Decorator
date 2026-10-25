@@ -34,6 +34,16 @@ public class ModRecipes {
             }
         });
 
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DecorationCrafterRecipe>> DECORATION_CRAFTER_SERIALIZER =
+        SERIALIZERS.register("decoration_crafter", DecorationCrafterRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<DecorationCrafterRecipe>> DECORATION_CRAFTER_TYPE =
+        TYPES.register("decoration_crafter", () -> new RecipeType<>() {
+            @Override
+            public String toString() {
+                return "decoration_crafter";
+            }
+        });
+
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
         TYPES.register(eventBus);

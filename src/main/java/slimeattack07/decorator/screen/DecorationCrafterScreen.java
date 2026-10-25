@@ -2,29 +2,27 @@ package slimeattack07.decorator.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
 import slimeattack07.decorator.Decorator;
 
 public class DecorationCrafterScreen extends AbstractScreen<DecorationCrafterMenu>{
-    private static final ResourceLocation stageOneTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_1.png");
-    private static final ResourceLocation stageTwoTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_2.png");
-    private static final ResourceLocation stageThreeTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_3.png");
-    private static final ResourceLocation stageFourTexture = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_4.png");
+    private static final Identifier stageOneTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_1.png");
+    private static final Identifier stageTwoTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_2.png");
+    private static final Identifier stageThreeTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_3.png");
+    private static final Identifier stageFourTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter_4.png");
 
     public DecorationCrafterScreen(DecorationCrafterMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
 
     @Override
-    protected ResourceLocation getGuiTexture() {
-        return ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter.png");
+    protected Identifier getGuiTexture() {
+        return Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/decoration_crafter.png");
     }
 
     @Override
-    protected ResourceLocation getProgressIconTexture() {
+    protected Identifier getProgressIconTexture() {
         return null; // We won't use this one for this particular screen because it uses 4 different progress textures.
     }
 
@@ -52,13 +50,13 @@ public class DecorationCrafterScreen extends AbstractScreen<DecorationCrafterMen
         }
 
         if(stage > 1) // If stage > 1, first stage has been completed and instructions slot is locked until last stage completes.
-            guiGraphics.blit(lockTexture,x + 27, y + 55, 0, 0, 10, 14, 10, 14);
+            render(guiGraphics, lockTexture,x + 27, y + 55, 0, 0, 10, 14, 10, 14);
     }
 
-    private void partialOrFull(GuiGraphics guiGraphics, int x, int y, ResourceLocation texture, int textureX, int textureY, int textureStage, int machineStage){
+    private void partialOrFull(GuiGraphics guiGraphics, int x, int y, Identifier texture, int textureX, int textureY, int textureStage, int machineStage){
         boolean mustScale = textureStage == machineStage;
         int textureHeight = mustScale ? menu.getScaledProgress() : 14;
         int difference = 14 - textureHeight;
-        guiGraphics.blit(texture,x + textureX, y + textureY + difference, 0, difference, 25, textureHeight, 25, 14);
+        render(guiGraphics, texture,x + textureX, y + textureY + difference, 0, difference, 25, textureHeight, 25, 14);
     }
 }

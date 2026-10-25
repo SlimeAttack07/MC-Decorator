@@ -33,9 +33,11 @@
 
   "item.decorator.disassembly_table": "Disassembly Table",
   "item.decorator.drafting_table": "Drafting Table",
+  "item.decorator.decoration_crafter": "Decoration Crafter",
 
   "block.decorator.disassembly_table": "Disassembly Table",
   "block.decorator.drafting_table": "Drafting Table",
+  "block.decorator.decoration_crafter": "Decoration Crafter",
 
   "tooltip.decorator.raw_draft": "Put this in a Drafting Table to refine it. You can use group or tier focus items to increase your odds of receiving Decoration Instructions from your selected group or tier when revealing the Refined Draft.",
   "tooltip.decorator.refined_draft": "Press [%1$s] while holding a Refined Draft to reveal Decoration Instructions.",
@@ -91,6 +93,11 @@
   
   "sounds.decorator.drafting_table_crafting": "Drafting Table works on draft",
   "sounds.decorator.drafting_table_finished": "Drafting Table finished drafting",
+  "sounds.decorator.decoration_crafter_crafting1": "Drafting Crafter is chiseling creation",
+  "sounds.decorator.decoration_crafter_crafting2": "Drafting Crafter is filing creation",
+  "sounds.decorator.decoration_crafter_crafting3": "Drafting Crafter is glueing creation",
+  "sounds.decorator.decoration_crafter_crafting4": "Drafting Crafter is painting creation",
+  "sounds.decorator.decoration_crafter_finished": "Decoration Crafter finished crafting",
 
   "decorator.configuration.title": "Example Mod Configs",
   "decorator.configuration.section.decorator.common.toml": "Example Mod Configs",

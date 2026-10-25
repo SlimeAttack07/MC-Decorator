@@ -1,29 +1,27 @@
 {
   "type": "decorator:decoration_crafter",
-  "instructions": {
-		  "item":  "minecraft:wooden_shovel"
-	},
+  "instructions": "minecraft:wooden_shovel",
   "inputsOne": [
 	  {
-		  "item":  "minecraft:oak_planks",
+		  "ingredient":  "minecraft:oak_planks",
 		  "count": 2
 	  }
   ], 
   "inputsTwo": [
 	  {
-		  "item":  "minecraft:oak_planks",
+		  "ingredient":  "minecraft:oak_planks",
 		  "count": 1
 	  }
   ],
   "inputsThree": [
 	  {
-		  "item":  "minecraft:oak_planks",
+		  "ingredient":  "minecraft:oak_planks",
 		  "count": 1
 	  }
   ],
   "inputsFour": [
 	  {
-		  "item":  "minecraft:oak_planks",
+		  "ingredient":  "minecraft:oak_planks",
 		  "count": 1
 	  }
   ],

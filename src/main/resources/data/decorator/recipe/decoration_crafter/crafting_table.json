@@ -1,33 +1,31 @@
 {
   "type": "decorator:decoration_crafter",
-  "instructions": {
-		  "item":  "minecraft:oak_button"
-	},
+  "instructions": "minecraft:oak_button",
   "inputsOne": [
 	  {
-		  "item":  "minecraft:oak_planks",
+		  "ingredient":  "minecraft:oak_planks",
 		  "count": 2
 	  }
   ], 
   "inputsTwo": [
 	  {
-		  "item":  "minecraft:oak_planks",
+		  "ingredient":  "minecraft:oak_planks",
 		  "count": 1
 	  }, 
 	  {
-		  "item":  "minecraft:iron_ingot",
+		  "ingredient":  "minecraft:iron_ingot",
 		  "count": 1
 	  }
   ],
   "inputsThree": [
 	  {
-		  "item":  "minecraft:stick",
+		  "ingredient":  "minecraft:stick",
 		  "count": 120
 	  }
   ],
   "inputsFour": [
 	  {
-		  "item":  "minecraft:brown_dye",
+		  "ingredient":  "minecraft:brown_dye",
 		  "count": 5
 	  }
   ],
