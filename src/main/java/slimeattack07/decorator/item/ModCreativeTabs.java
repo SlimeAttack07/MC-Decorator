@@ -87,6 +87,6 @@ public class ModCreativeTabs {
     }
 
     private static boolean hasOwnTab(Item item){
-        return !item.equals(ModItems.DECORATION_INSTRUCTIONS.get()) && item.equals(ModItems.DECORATION_SCAN.get()) && !(item instanceof PrintedDecorationItem);
+        return item.equals(ModItems.DECORATION_INSTRUCTIONS.get()) || item.equals(ModItems.DECORATION_SCAN.get()) || item instanceof PrintedDecorationItem;
     }
 }

@@ -12,10 +12,10 @@ public class ModItems {
 
     public static final DeferredItem<Item> DRAFTING_PAPER = registerItem("drafting_paper");
     public static final DeferredItem<Item> RAW_DRAFT = registerTooltippedItem("raw_draft");
-    public static final DeferredItem<Item> REFINED_DRAFT = ITEMS.register("refined_draft", () -> new RefinedDraftItem(new Item.Properties(), "refined_draft"));
+    public static final DeferredItem<Item> REFINED_DRAFT = ITEMS.register("refined_draft", () -> new RefinedDraftItem(properties("registryId"), "refined_draft"));
     public static final DeferredItem<Item> SCAN_TEMPLATE = registerTooltippedItem("scan_template");
     public static final DeferredItem<Item> DECORATION_INSTRUCTIONS = registerTooltippedItem("decoration_instructions");
-    public static final DeferredItem<Item> DECORATION_SCAN = ITEMS.register("decoration_scan", () -> new DecorationScanItem(new Item.Properties(), "decoration_scan"));
+    public static final DeferredItem<Item> DECORATION_SCAN = ITEMS.register("decoration_scan", () -> new DecorationScanItem(properties("registryId"), "decoration_scan"));
 
     public static final DeferredItem<Item> GENERIC_PRINTING_PASTE = registerTooltippedItem("generic_printing_paste");
     public static final DeferredItem<Item> WHITE_PRINTING_PASTE = registerTooltippedItem("white_printing_paste");
@@ -49,18 +49,24 @@ public class ModItems {
     }
 
     private static DeferredItem<Item> registerItem(String registryId){
-        return ITEMS.register(registryId, () -> new Item(new Item.Properties()));
+        return ITEMS.register(registryId, () -> new Item(properties(registryId)));
     }
 
     private static DeferredItem<Item> registerTooltippedItem(String registryId){
-        return ITEMS.register(registryId, () -> new TooltippedItem(new Item.Properties(), registryId));
+        return ITEMS.register(registryId, () -> new TooltippedItem(properties(registryId), registryId));
     }
 
     private static DeferredItem<Item> registerTierFocusItem(String registryId, DecorationTier tier){
-        return ITEMS.register(registryId, () -> new TierFocusItem(new Item.Properties(), registryId, tier));
+        return ITEMS.register(registryId, () -> new TierFocusItem(properties(registryId), registryId, tier));
     }
 
     private static DeferredItem<PrintedDecorationItem> registerPrintedDecorationItem(String registryId, DecorationTier tier){
-        return ITEMS.register(registryId, () -> new PrintedDecorationItem(new Item.Properties(), registryId, tier));
+        return ITEMS.register(registryId, () -> new PrintedDecorationItem(properties(registryId), registryId, tier));
+    }
+
+    // While this looks pointless here, the 1.21.11 version requires calling '.setId(registryId)' on the properties.
+    // By having this method here, I don't need to make any changes to this file when adding new items here and merging to the 1.21.11 version.
+    private static Item.Properties properties(String registryId){
+        return new Item.Properties();
     }
 }

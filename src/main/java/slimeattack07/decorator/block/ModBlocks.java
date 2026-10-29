@@ -19,16 +19,16 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Decorator.MOD_ID);
 
     public static final DeferredBlock<DisassemblyTable> DISASSEMBLY_TABLE = registerBlock("disassembly_table",
-        () -> new DisassemblyTable(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+        () -> new DisassemblyTable(props("disassembly_table").strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static final DeferredBlock<DraftingTable> DRAFTING_TABLE = registerMachineBlock("drafting_table",
-        () -> new DraftingTable(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+        () -> new DraftingTable(props("drafting_table").strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static final DeferredBlock<DecorationCrafter> DECORATION_CRAFTER = registerMachineBlock("decoration_crafter",
-        () -> new DecorationCrafter(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+        () -> new DecorationCrafter(props("decoration_crafter").strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static final DeferredBlock<DecorationScanner> DECORATION_SCANNER = registerMachineBlock("decoration_scanner",
-        () -> new DecorationScanner(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+        () -> new DecorationScanner(props("decoration_scanner").strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);
@@ -55,5 +55,11 @@ public class ModBlocks {
         registerMachineBlockItem(name, dBlock);
 
         return dBlock;
+    }
+
+    // While this looks pointless here, the 1.21.11 version requires calling '.setId(registryId)' on the properties.
+    // By having this method here, I don't need to make any changes to this file when adding new items here and merging to the 1.21.11 version.
+    private static BlockBehaviour.Properties props(String name){
+        return BlockBehaviour.Properties.of();
     }
 }

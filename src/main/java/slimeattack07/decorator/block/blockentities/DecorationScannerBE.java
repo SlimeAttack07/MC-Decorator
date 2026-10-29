@@ -48,8 +48,8 @@ public class DecorationScannerBE extends AbstractMachineBE {
         ItemStack decoration = ItemUtils.getStackInSlot(itemHandler, DECORATION_INPUT_SLOT);
 
         ItemStack newOutput = new ItemStack(ModItems.DECORATION_SCAN.get());
-        ItemStack currentTemplateOutput = itemHandler.getStackInSlot(TEMPLATE_OUTPUT_SLOT);
-        ItemStack currentDecorationOutput = itemHandler.getStackInSlot(DECORATION_OUTPUT_SLOT);
+        ItemStack currentTemplateOutput = ItemUtils.getStackInSlot(itemHandler, TEMPLATE_OUTPUT_SLOT);
+        ItemStack currentDecorationOutput = ItemUtils.getStackInSlot(itemHandler, DECORATION_OUTPUT_SLOT);
 
         if(!isBasicCompatible(currentDecorationOutput, decoration))
             return false; // Something else is obstructing the output for the decoration.
