@@ -6,6 +6,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import slimeattack07.decorator.Decorator;
 import slimeattack07.decorator.block.blockentities.DecorationCrafterBE;
+import slimeattack07.decorator.block.blockentities.DecorationScannerBE;
 import slimeattack07.decorator.block.blockentities.DisassemblyTableBE;
 import slimeattack07.decorator.block.blockentities.DraftingTableBE;
 
@@ -23,6 +24,9 @@ public class ModBlockEntities {
 
     public static final Supplier<BlockEntityType<DecorationCrafterBE>> DECORATION_CRAFTER_BE = BLOCK_ENTITIES.register("decoration_crafter_be",
         () -> new BlockEntityType<>(DecorationCrafterBE::new, ModBlocks.DECORATION_CRAFTER.get()));
+
+    public static final Supplier<BlockEntityType<DecorationScannerBE>> DECORATION_SCANNER_BE = BLOCK_ENTITIES.register("decoration_scanner_be",
+        () -> BlockEntityType.Builder.of(DecorationScannerBE::new, ModBlocks.DECORATION_SCANNER.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

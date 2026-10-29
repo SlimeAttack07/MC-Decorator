@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "decorator:block/disassembly_table_side",
+    "east": "decorator:block/disassembly_table_side",
+    "north": "decorator:block/disassembly_table_side",
+    "particle": "decorator:block/disassembly_table_side",
+    "south": "decorator:block/disassembly_table_side",
+    "up": "minecraft:block/redstone_block",
+    "west": "decorator:block/disassembly_table_side"
+  }
+}

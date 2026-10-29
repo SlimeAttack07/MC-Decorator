@@ -16,6 +16,8 @@ public class ModTags {
 //        public static final TagKey<Item> BASIC_FOCUS = createTag("tier_focus/basic_focus");
 //        public static final TagKey<Item> EXPERIENCED_FOCUS = createTag("tier_focus/experienced_focus");
         public static final TagKey<Item> DECORATION_INSTRUCTIONS = createTag("decoration_instructions");
+        public static final TagKey<Item> SCAN_TEMPLATES = createTag("scan_templates");
+        public static final TagKey<Item> PRINTED_DECORATIONS = createTag("printed_decorations");
 
         private static TagKey<Item> createTag(String name){
             return ItemTags.create(Identifier.fromNamespaceAndPath(Decorator.MOD_ID, name));

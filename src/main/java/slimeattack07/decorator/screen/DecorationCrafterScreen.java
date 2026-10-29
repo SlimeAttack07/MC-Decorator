@@ -38,7 +38,7 @@ public class DecorationCrafterScreen extends AbstractScreen<DecorationCrafterMen
 
     protected void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         int stage = menu.getStage();
-        
+
         if(menu.isCrafting() || stage > 1) {
             // We intentionally leave out breaks so that the correct amount of textures automatically draw based on stage by putting the cases in reversed order.
             switch (stage) {

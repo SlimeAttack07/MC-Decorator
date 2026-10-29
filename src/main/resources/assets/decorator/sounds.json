@@ -40,5 +40,16 @@
 		"sounds": [
 			"decorator:decoration_crafter_finished"
 		]
+	},"decoration_scanner_crafting": {
+		"subtitle": "sounds.decorator.decoration_scanner_crafting",
+		"sounds": [
+			"decorator:decoration_scanner_crafting"
+		]
+	},
+	"decoration_scanner_finished": {
+		"subtitle": "sounds.decorator.decoration_scanner_finished",
+		"sounds": [
+			"decorator:decoration_scanner_finished"
+		]
 	}
 }
