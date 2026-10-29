@@ -1,6 +1,9 @@
 {
-  "creativetab.decorator.decorator_items": "Decorator Items",
-  "creativetab.decorator.decorator_machines": "Decorator Machines",
+  "creativetab.decorator.items": "Decorator Items",
+  "creativetab.decorator.machines": "Decorator Machines",
+  "creativetab.decorator.scans": "Decorator Scans",
+  "creativetab.decorator.instructions": "Decorator Instructions",
+  "creativetab.decorator.printed_decorations": "Decorator Printed Decorations",
 
   "item.decorator.drafting_paper": "Drafting Paper",
   "item.decorator.raw_draft": "Raw Draft",
@@ -30,19 +33,24 @@
   "item.decorator.superb_tier_focus": "Superb Tier Focus",
   "item.decorator.majestic_tier_focus": "Majestic Tier Focus",
   "item.decorator.supreme_tier_focus": "Supreme Tier Focus",
+  
+  "item.decorator.testdec_one": "Test decoration 1",
+  "item.decorator.testdec_two": "Test decoration 2",
 
   "item.decorator.disassembly_table": "Disassembly Table",
   "item.decorator.drafting_table": "Drafting Table",
   "item.decorator.decoration_crafter": "Decoration Crafter",
+  "item.decorator.decoration_scanner": "Decoration Scanner",
 
   "block.decorator.disassembly_table": "Disassembly Table",
   "block.decorator.drafting_table": "Drafting Table",
   "block.decorator.decoration_crafter": "Decoration Crafter",
+  "block.decorator.decoration_scanner": "Decoration Scanner",
 
   "tooltip.decorator.raw_draft": "Put this in a Drafting Table to refine it. You can use group or tier focus items to increase your odds of receiving Decoration Instructions from your selected group or tier when revealing the Refined Draft.",
   "tooltip.decorator.refined_draft": "Press [%1$s] while holding a Refined Draft to reveal Decoration Instructions.",
   "tooltip.decorator.scan_template": "Put inside a Decoration Scanner with any printed decoration to obtain a Decoration Scan for that decoration. The input decoration is not consumed.",
-  "tooltip.decorator.decoration_scan": "Put inside a Smart 3D Printer along with the required materials to create a copy of the decoration stored on this scan. The Decoration Scan is not consumed.",
+  "tooltip.decorator.decoration_scan": "Put inside a Smart 3D Printer along with the required materials to create a copy of the decoration stored on this scan (%1$s). The Decoration Scan is not consumed.",
   "tooltip.decorator.decoration_instructions": "Put inside a Decoration Workbench along with the required materials to create a copy of the decoration described by these instructions. The Decoration Instructions are not consumed.",
   "tooltip.decorator.generic_printing_paste": "Put inside a 3D Printer to print a random decoration. You can use group or tier focus items to increase your odds of printing decorations from your selected group or tier.",
   "tooltip.decorator.white_printing_paste": "Put inside a smart 3D printer to enable printing decorations that require the color 'White'.",
@@ -66,6 +74,9 @@
   "tooltip.decorator.superb_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
   "tooltip.decorator.majestic_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
   "tooltip.decorator.supreme_tier_focus": "Put inside a Drafting Table or 3D Printer to increase your odds of rolling a decoration from this tier.",
+  
+  "tooltip.decorator.testdec_one": "Brief text explaining what decoration is.",
+  "tooltip.decorator.testdec_two": "Also brief text explaining what decoration is.",
   
   "focus.decorator.no_tier_focus": "Created without tier focus, these are the odds for picking each decoration tier:",
   "focus.decorator.if_tier_focus_fails": "If tier focus fails to apply, these are the odds for picking each decoration tier:",
@@ -91,6 +102,12 @@
   "experience.decorator.machine.master": "Master (%1$s xp)",
   "experience.decorator.machine.legend": "Legend (%1$s xp)",
   
+  "rarity.decorator.modest": "Modest Decoration",
+  "rarity.decorator.grand": "Grand Decoration",
+  "rarity.decorator.superb": "Superb Decoration",
+  "rarity.decorator.majestic": "Majestic Decoration",
+  "rarity.decorator.supreme": "Supreme Decoration",
+  
   "sounds.decorator.drafting_table_crafting": "Drafting Table works on draft",
   "sounds.decorator.drafting_table_finished": "Drafting Table finished drafting",
   "sounds.decorator.decoration_crafter_crafting1": "Drafting Crafter is chiseling creation",
@@ -98,6 +115,8 @@
   "sounds.decorator.decoration_crafter_crafting3": "Drafting Crafter is glueing creation",
   "sounds.decorator.decoration_crafter_crafting4": "Drafting Crafter is painting creation",
   "sounds.decorator.decoration_crafter_finished": "Decoration Crafter finished crafting",
+  "sounds.decorator.decoration_scanner_crafting": "Decoration Scanner is scanning decoration",
+  "sounds.decorator.decoration_scanner_finished": "Decoration Scanner finished scanning",
 
   "decorator.configuration.title": "Example Mod Configs",
   "decorator.configuration.section.decorator.common.toml": "Example Mod Configs",

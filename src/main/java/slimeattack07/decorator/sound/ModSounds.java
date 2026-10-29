@@ -19,6 +19,8 @@ public class ModSounds {
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_CRAFTING3 = registerSoundEvent("decoration_crafter_crafting3");
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_CRAFTING4 = registerSoundEvent("decoration_crafter_crafting4");
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_FINISHED = registerSoundEvent("decoration_crafter_finished");
+    public static final Supplier<SoundEvent> DECORATION_SCANNER_CRAFTING = registerSoundEvent("decoration_scanner_crafting");
+    public static final Supplier<SoundEvent> DECORATION_SCANNER_FINISHED = registerSoundEvent("decoration_scanner_finished");
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID, name);

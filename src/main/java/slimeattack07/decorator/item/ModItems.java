@@ -15,7 +15,7 @@ public class ModItems {
     public static final DeferredItem<Item> REFINED_DRAFT = ITEMS.register("refined_draft", () -> new RefinedDraftItem(new Item.Properties(), "refined_draft"));
     public static final DeferredItem<Item> SCAN_TEMPLATE = registerTooltippedItem("scan_template");
     public static final DeferredItem<Item> DECORATION_INSTRUCTIONS = registerTooltippedItem("decoration_instructions");
-    public static final DeferredItem<Item> DECORATION_SCAN = registerTooltippedItem("decoration_scan");
+    public static final DeferredItem<Item> DECORATION_SCAN = ITEMS.register("decoration_scan", () -> new DecorationScanItem(new Item.Properties(), "decoration_scan"));
 
     public static final DeferredItem<Item> GENERIC_PRINTING_PASTE = registerTooltippedItem("generic_printing_paste");
     public static final DeferredItem<Item> WHITE_PRINTING_PASTE = registerTooltippedItem("white_printing_paste");
@@ -41,6 +41,9 @@ public class ModItems {
     public static final DeferredItem<Item> MAJESTIC_TIER_FOCUS = registerTierFocusItem("majestic_tier_focus", DecorationTier.MAJESTIC);
     public static final DeferredItem<Item> SUPREME_TIER_FOCUS = registerTierFocusItem("supreme_tier_focus", DecorationTier.SUPREME);
 
+    public static final DeferredItem<PrintedDecorationItem> TESTDEC_ONE = registerPrintedDecorationItem("testdec_one", DecorationTier.GRAND);
+    public static final DeferredItem<PrintedDecorationItem> TESTDEC_TWO = registerPrintedDecorationItem("testdec_two", DecorationTier.SUPREME);
+
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
     }
@@ -55,5 +58,9 @@ public class ModItems {
 
     private static DeferredItem<Item> registerTierFocusItem(String registryId, DecorationTier tier){
         return ITEMS.register(registryId, () -> new TierFocusItem(new Item.Properties(), registryId, tier));
+    }
+
+    private static DeferredItem<PrintedDecorationItem> registerPrintedDecorationItem(String registryId, DecorationTier tier){
+        return ITEMS.register(registryId, () -> new PrintedDecorationItem(new Item.Properties(), registryId, tier));
     }
 }

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "decorator:testdec_one",
+    "decorator:testdec_two"
+  ]
+}

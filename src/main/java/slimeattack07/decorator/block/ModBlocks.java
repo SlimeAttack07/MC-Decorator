@@ -27,6 +27,9 @@ public class ModBlocks {
     public static final DeferredBlock<DecorationCrafter> DECORATION_CRAFTER = registerMachineBlock("decoration_crafter",
         () -> new DecorationCrafter(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
+    public static final DeferredBlock<DecorationScanner> DECORATION_SCANNER = registerMachineBlock("decoration_scanner",
+        () -> new DecorationScanner(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);
     }
