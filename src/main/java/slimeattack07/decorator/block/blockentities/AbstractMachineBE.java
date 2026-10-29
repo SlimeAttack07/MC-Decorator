@@ -44,6 +44,7 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 failureCooldown = 0;
                 noRecipeCooldown = 0;
+                onMachineContentsChanged();
             }
         }
 
@@ -121,7 +122,7 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
     protected int maxProgress = getMaxProgress();
     protected int progress = 0;
     private int experience = 0;
-    private int nextSoundAt = 0; // Don't need to save this.
+    private int nextSoundIn = 0; // Don't need to save this.
 
     // Caching for performance.
     private MachineTier lastTier = MachineTier.BASIC;
@@ -264,6 +265,9 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState) {
+        if(nextSoundIn > 0)
+            nextSoundIn--; // Modify sound timer here to ensure it doesn't linger between crafts.
+
         if(noRecipeCooldown > 0) { // Couldn't find a recipe last time and no slot has updated, so it'll still not find a recipe. Stop early.
             noRecipeCooldown--;
 
@@ -299,7 +303,6 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
     private void resetProgress() {
         progress = 0;
         maxProgress = getMaxProgress();
-        nextSoundAt = 0;
         noRecipeCooldown = 0;
     }
 
@@ -311,9 +314,9 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
         if(progress < maxProgress) {
             progress = Math.min(maxProgress, progress + getCurrentMachineTier().getMultiplier());
 
-            if(progress > nextSoundAt) {
+            if(nextSoundIn <= 0) { // Decreasing timer happens in tick().
                 level.playSound(null, pos, getCraftingInProgressSound(), SoundSource.BLOCKS, .25F, 1);
-                nextSoundAt = progress + 100;
+                nextSoundIn = 100;
             }
         }
     }
@@ -328,17 +331,17 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
     }
 
     /** Checks if two item stacks are compatible excluding NBT.
-     * It's compatible if they both have the same item and merging them would not exceed the max stack size.
+     * It's compatible if they both have the same item and merging mergingIntoSource into source them would not exceed the max stack size.
      *
      * @param source
-     * @param mergingInto
+     * @param mergingIntoSource
      * @return
      */
-    protected boolean isBasicCompatible(ItemStack source, ItemStack mergingInto){
+    protected boolean isBasicCompatible(ItemStack source, ItemStack mergingIntoSource){
         if(source.isEmpty())
             return true;
 
-        return source.getItem().equals(mergingInto.getItem()) && source.getCount() + mergingInto.getCount() <= source.getMaxStackSize();
+        return source.getItem().equals(mergingIntoSource.getItem()) && source.getCount() + mergingIntoSource.getCount() <= source.getMaxStackSize();
     }
 
     /** Checks if two item stacks are compatible and share the same given tag.
@@ -362,6 +365,11 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
         else
             return false; // It's not a CompoundTag, meaning it's present as something else since we didn't get an empty tag and therefore we probably can't merge the item.
     }
+
+    /** Called when the contents of this machine change.
+     * Does nothing by default.
+     */
+    protected void onMachineContentsChanged(){}
 
     /** Whether something may be extracted from this slot.
      * Returns true by default.

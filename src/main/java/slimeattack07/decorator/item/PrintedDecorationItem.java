@@ -7,13 +7,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import slimeattack07.decorator.Decorator;
 import slimeattack07.decorator.util.DecorationTier;
 
 import java.util.List;
 
-public class PrintedDecorationItem extends Item{
+public class PrintedDecorationItem extends Item implements HasTooltip{
     private final String registryId;
     private final DecorationTier tier;
 
@@ -25,19 +24,17 @@ public class PrintedDecorationItem extends Item{
         this.tier = tier;
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable(registryId).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
-        tooltipComponents.add(Component.translatable("rarity.decorator." + tier.name().toLowerCase()).withStyle(tier.getColor()).withStyle(ChatFormatting.BOLD));
-
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-    }
-
     public String getTierString(){
         return tier.name();
     }
 
     public String getScanId(){
         return BuiltInRegistries.ITEM.getKey(this) + "," + getTierString();
+    }
+
+    @Override
+    public void addToTooltip(List<Component> tooltip, ItemStack stack) {
+        tooltip.add(Component.translatable(registryId).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("rarity.decorator." + tier.name().toLowerCase()).withStyle(tier.getColor()).withStyle(ChatFormatting.BOLD));
     }
 }

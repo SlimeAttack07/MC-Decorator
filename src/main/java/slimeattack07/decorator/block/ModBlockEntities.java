@@ -26,7 +26,7 @@ public class ModBlockEntities {
         () -> new BlockEntityType<>(DecorationCrafterBE::new, ModBlocks.DECORATION_CRAFTER.get()));
 
     public static final Supplier<BlockEntityType<DecorationScannerBE>> DECORATION_SCANNER_BE = BLOCK_ENTITIES.register("decoration_scanner_be",
-        () -> BlockEntityType.Builder.of(DecorationScannerBE::new, ModBlocks.DECORATION_SCANNER.get()).build(null));
+        () -> new BlockEntityType<>(DecorationScannerBE::new, ModBlocks.DECORATION_SCANNER.get()));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

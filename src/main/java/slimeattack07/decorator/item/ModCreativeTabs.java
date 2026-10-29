@@ -2,7 +2,7 @@ package slimeattack07.decorator.item;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -32,7 +32,7 @@ public class ModCreativeTabs {
 
     public static final Supplier<CreativeModeTab> DECORATOR_INSTRUCTIONS = TABS.register("decorator_instructions_tab",
         () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.DECORATION_INSTRUCTIONS.get()))
-            .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_items_tab"))
+            .withTabsBefore(Identifier.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_items_tab"))
             .title(Component.translatable("creativetab.decorator.instructions"))
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.DECORATION_INSTRUCTIONS.get());
@@ -40,13 +40,13 @@ public class ModCreativeTabs {
 
     public static final Supplier<CreativeModeTab> DECORATOR_SCANS = TABS.register("decorator_scans_tab",
         () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.DECORATION_SCAN.get()))
-            .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_instructions_tab"))
+            .withTabsBefore(Identifier.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_instructions_tab"))
             .title(Component.translatable("creativetab.decorator.scans"))
             .displayItems((parameters, output) -> registerScans(output)).build());
 
     public static final Supplier<CreativeModeTab> DECORATOR_MACHINES = TABS.register("decorator_machines_tab",
         () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.DRAFTING_TABLE))
-            .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_scans_tab"))
+            .withTabsBefore(Identifier.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_scans_tab"))
             .title(Component.translatable("creativetab.decorator.machines"))
             .displayItems((parameters, output) -> {
                 registerMachine(output, ModBlocks.DRAFTING_TABLE.get());
@@ -56,7 +56,7 @@ public class ModCreativeTabs {
 
     public static final Supplier<CreativeModeTab> DECORATOR_PRINTED_DECORATIONS = TABS.register("decorator_printed_decorations",
         () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.TESTDEC_ONE.get()))
-            .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_machines_tab"))
+            .withTabsBefore(Identifier.fromNamespaceAndPath(Decorator.MOD_ID, "decorator_machines_tab"))
             .title(Component.translatable("creativetab.decorator.printed_decorations"))
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.TESTDEC_ONE);
@@ -87,6 +87,6 @@ public class ModCreativeTabs {
     }
 
     private static boolean hasOwnTab(Item item){
-        return !item.equals(ModItems.DECORATION_INSTRUCTIONS.get()) && item.equals(ModItems.DECORATION_SCAN.get()) && !(item instanceof PrintedDecorationItem);
+        return item.equals(ModItems.DECORATION_INSTRUCTIONS.get()) || item.equals(ModItems.DECORATION_SCAN.get()) || item instanceof PrintedDecorationItem;
     }
 }

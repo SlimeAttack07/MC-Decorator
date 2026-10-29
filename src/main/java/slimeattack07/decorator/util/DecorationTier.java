@@ -14,8 +14,8 @@ public enum DecorationTier {
     public ChatFormatting getColor(){
         return switch(this){
             case MODEST -> ChatFormatting.WHITE;
-            case GRAND -> ChatFormatting.AQUA;
-            case SUPERB -> ChatFormatting.GREEN;
+            case GRAND -> ChatFormatting.GREEN;
+            case SUPERB -> ChatFormatting.AQUA;
             case MAJESTIC -> ChatFormatting.DARK_PURPLE;
             case SUPREME -> ChatFormatting.GOLD;
         };

@@ -47,8 +47,8 @@ public enum MachineTier {
     public ChatFormatting getColor(){
         return switch(this){
             case BASIC -> ChatFormatting.WHITE;
-            case EXPERIENCED -> ChatFormatting.AQUA;
-            case EXPERT -> ChatFormatting.GREEN;
+            case EXPERIENCED -> ChatFormatting.GREEN;
+            case EXPERT -> ChatFormatting.AQUA;
             case MASTER -> ChatFormatting.DARK_PURPLE;
             case LEGEND -> ChatFormatting.GOLD;
         };
