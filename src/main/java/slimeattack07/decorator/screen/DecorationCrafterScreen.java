@@ -36,6 +36,7 @@ public class DecorationCrafterScreen extends AbstractScreen<DecorationCrafterMen
         return new SlotLocation(121, 54);
     }
 
+    @Override
     protected void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         int stage = menu.getStage();
 

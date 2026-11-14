@@ -1,0 +1,18 @@
+{
+  "type": "decorator:mixer",
+  "inputs": [
+	  {
+		  "item":  "minecraft:flint",
+		  "count": 2
+	  },
+	  {
+		  "item":  "minecraft:yellow_dye",
+		  "count": 4
+	  }
+  ], 
+  "stepDuration": 100,
+  "result": {
+    "id": "decorator:yellow_printing_paste",
+	"count": 2
+  }
+}

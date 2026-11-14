@@ -1,0 +1,21 @@
+{
+  "type": "decorator:mixer",
+  "inputs": [
+	  {
+		  "item":  "minecraft:water_bucket",
+		  "count": 1
+	  },
+	  {
+		  "item":  "minecraft:red_dye",
+		  "count": 3
+	  }
+  ], 
+  "stepDuration": 400,
+  "result": {
+    "id": "decorator:red_printing_paste",
+	"count": 2
+  },
+  "byProduct": {
+    "id": "minecraft:bucket"
+  }
+}

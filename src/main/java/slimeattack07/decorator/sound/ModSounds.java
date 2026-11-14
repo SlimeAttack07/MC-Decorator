@@ -14,13 +14,20 @@ public class ModSounds {
 
     public static final Supplier<SoundEvent> DRAFTING_TABLE_CRAFTING = registerSoundEvent("drafting_table_crafting");
     public static final Supplier<SoundEvent> DRAFTING_TABLE_FINISHED = registerSoundEvent("drafting_table_finished");
+
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_CRAFTING1 = registerSoundEvent("decoration_crafter_crafting1");
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_CRAFTING2 = registerSoundEvent("decoration_crafter_crafting2");
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_CRAFTING3 = registerSoundEvent("decoration_crafter_crafting3");
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_CRAFTING4 = registerSoundEvent("decoration_crafter_crafting4");
     public static final Supplier<SoundEvent> DECORATION_CRAFTER_FINISHED = registerSoundEvent("decoration_crafter_finished");
+
     public static final Supplier<SoundEvent> DECORATION_SCANNER_CRAFTING = registerSoundEvent("decoration_scanner_crafting");
     public static final Supplier<SoundEvent> DECORATION_SCANNER_FINISHED = registerSoundEvent("decoration_scanner_finished");
+
+    public static final Supplier<SoundEvent> MIXER_CRAFTING1 = registerSoundEvent("mixer_crafting1");
+    public static final Supplier<SoundEvent> MIXER_CRAFTING2 = registerSoundEvent("mixer_crafting2");
+    public static final Supplier<SoundEvent> MIXER_CRAFTING3 = registerSoundEvent("mixer_crafting3");
+    public static final Supplier<SoundEvent> MIXER_FINISHED = registerSoundEvent("mixer_finished");
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
         Identifier id = Identifier.fromNamespaceAndPath(Decorator.MOD_ID, name);

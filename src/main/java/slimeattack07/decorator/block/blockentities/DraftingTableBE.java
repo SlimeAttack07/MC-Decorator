@@ -51,7 +51,7 @@ public class DraftingTableBE extends AbstractMachineBE {
         ItemStack output = recipe.output();
         ItemStack stack = ItemUtils.getStackInSlot(itemHandler, OUTPUT_SLOT);
 
-        if(!isBasicCompatible(stack, output))
+        if(!ItemUtils.isBasicCompatible(stack, output))
             return false; // Something else is obstructing the output.
 
         int chance = getCurrentMachineTier().getFocusChance();
@@ -94,7 +94,7 @@ public class DraftingTableBE extends AbstractMachineBE {
             if(!expectedTag.isEmpty())
                 stack.set(DataComponents.CUSTOM_DATA, CustomData.of(expectedTag));
         } else{
-            if(isAdvancedCompatible(stack, output, expectedTag))
+            if(ItemUtils.isAdvancedCompatible(stack, output, expectedTag))
                 stack.setCount(stack.getCount() + output.getCount());
             else
                 return false; // The current output is the same item but has different NBT, so we can't create the new output.
