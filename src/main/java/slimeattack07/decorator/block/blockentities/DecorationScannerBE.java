@@ -51,10 +51,10 @@ public class DecorationScannerBE extends AbstractMachineBE {
         ItemStack currentTemplateOutput = ItemUtils.getStackInSlot(itemHandler, TEMPLATE_OUTPUT_SLOT);
         ItemStack currentDecorationOutput = ItemUtils.getStackInSlot(itemHandler, DECORATION_OUTPUT_SLOT);
 
-        if(!isBasicCompatible(currentDecorationOutput, decoration))
+        if(!ItemUtils.isBasicCompatible(currentDecorationOutput, decoration))
             return false; // Something else is obstructing the output for the decoration.
 
-        if(!isBasicCompatible(currentTemplateOutput, newOutput))
+        if(!ItemUtils.isBasicCompatible(currentTemplateOutput, newOutput))
             return false; // Something else is obstructing the output for the template (or it has reached max stack size).
 
         String expectedDecoration = BuiltInRegistries.ITEM.getKey(decoration.getItem()).toString();

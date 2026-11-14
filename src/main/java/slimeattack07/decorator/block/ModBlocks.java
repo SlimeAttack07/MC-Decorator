@@ -30,6 +30,9 @@ public class ModBlocks {
     public static final DeferredBlock<DecorationScanner> DECORATION_SCANNER = registerMachineBlock("decoration_scanner",
         () -> new DecorationScanner(props("decoration_scanner").strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
+    public static final DeferredBlock<Mixer> MIXER = registerMachineBlock("mixer",
+        () -> new Mixer(props("mixer").strength(4f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);
     }

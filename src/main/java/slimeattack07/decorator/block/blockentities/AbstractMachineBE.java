@@ -84,14 +84,14 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
 
     protected int maxProgress = getMaxProgress();
     protected int progress = 0;
-    private int experience = 0;
-    private int nextSoundIn = 0; // Don't need to save this.
+    protected int experience = 0;
+    protected int nextSoundIn = 0; // Don't need to save this.
 
     // Caching for performance.
-    private MachineTier lastTier = MachineTier.BASIC;
-    private int lastExperience;
-    private int failureCooldown = 0; // Doesn't need to be saved to block entity.
-    private int noRecipeCooldown = 0;
+    protected MachineTier lastTier = MachineTier.BASIC;
+    protected int lastExperience;
+    protected int failureCooldown = 0; // Doesn't need to be saved to block entity.
+    protected int noRecipeCooldown = 0;
 
     public AbstractMachineBE(BlockPos pos, BlockState blockState, BlockEntityType<?> type) {
         super(type, pos, blockState);
@@ -286,42 +286,6 @@ public abstract class AbstractMachineBE extends BlockEntity implements MenuProvi
      */
     protected int experiencedGained(){
         return 1;
-    }
-
-    /** Checks if two item stacks are compatible excluding NBT.
-     * It's compatible if they both have the same item and merging mergingIntoSource into source them would not exceed the max stack size.
-     *
-     * @param source
-     * @param mergingIntoSource
-     * @return
-     */
-    protected boolean isBasicCompatible(ItemStack source, ItemStack mergingIntoSource){
-        if(source.isEmpty())
-            return true;
-
-        return source.getItem().equals(mergingIntoSource.getItem()) && source.getCount() + mergingIntoSource.getCount() <= source.getMaxStackSize();
-    }
-
-    /** Checks if two item stacks are compatible and share the same given tag.
-     *
-     * @param source
-     * @param mergingInto
-     * @param expectedTag
-     * @return
-     */
-    protected boolean isAdvancedCompatible(ItemStack source, ItemStack mergingInto, CompoundTag expectedTag){
-        if(!isBasicCompatible(source, mergingInto))
-            return false;
-
-        Object stackCustomDataObject = source.getComponents().getOrDefault(DataComponents.CUSTOM_DATA, new CompoundTag());
-
-        if(stackCustomDataObject instanceof CustomData customData)
-            stackCustomDataObject = customData.copyTag();
-
-        if(stackCustomDataObject instanceof CompoundTag stackTag)
-            return (stackTag.isEmpty() && expectedTag.isEmpty()) || stackTag.equals(expectedTag);
-        else
-            return false; // It's not a CompoundTag, meaning it's present as something else since we didn't get an empty tag and therefore we probably can't merge the item.
     }
 
     @Override

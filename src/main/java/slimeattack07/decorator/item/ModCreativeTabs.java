@@ -52,6 +52,7 @@ public class ModCreativeTabs {
                 registerMachine(output, ModBlocks.DRAFTING_TABLE.get());
                 registerMachine(output, ModBlocks.DECORATION_CRAFTER.get());
                 registerMachine(output, ModBlocks.DECORATION_SCANNER.get());
+                registerMachine(output, ModBlocks.MIXER.get());
             }).build());
 
     public static final Supplier<CreativeModeTab> DECORATOR_PRINTED_DECORATIONS = TABS.register("decorator_printed_decorations",

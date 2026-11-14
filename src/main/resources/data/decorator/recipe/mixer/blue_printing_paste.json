@@ -1,0 +1,22 @@
+{
+  "type": "decorator:mixer",
+  "inputs": [
+	  {
+		  "item":  "minecraft:flint",
+		  "count": 3
+	  },
+	  {
+		  "item":  "minecraft:blue_dye",
+		  "count": 3
+	  }
+  ], 
+  "stepDuration": 100,
+  "result": {
+    "id": "decorator:blue_printing_paste",
+	"count": 4
+  },
+  "byProduct": {
+    "id": "minecraft:gravel",
+	"count": 1
+  }
+}

@@ -1,0 +1,18 @@
+package slimeattack07.decorator.recipe;
+
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeInput;
+
+import java.util.List;
+
+public record MixerRecipeInput(List<ItemStack> inputs) implements RecipeInput {
+    @Override
+    public ItemStack getItem(int i) {
+        return inputs.get(i);
+    }
+
+    @Override
+    public int size() {
+        return inputs.size();
+    }
+}

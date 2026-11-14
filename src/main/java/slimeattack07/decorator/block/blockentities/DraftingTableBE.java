@@ -18,6 +18,7 @@ import slimeattack07.decorator.recipe.DraftingTableRecipeInput;
 import slimeattack07.decorator.recipe.ModRecipes;
 import slimeattack07.decorator.screen.DraftingTableMenu;
 import slimeattack07.decorator.sound.ModSounds;
+import slimeattack07.decorator.util.ItemUtils;
 import slimeattack07.decorator.util.ModTags;
 
 public class DraftingTableBE extends AbstractMachineBE {
@@ -49,7 +50,7 @@ public class DraftingTableBE extends AbstractMachineBE {
         ItemStack output = recipe.output();
         ItemStack stack = itemHandler.getStackInSlot(OUTPUT_SLOT);
 
-        if(!isBasicCompatible(stack, output))
+        if(!ItemUtils.isBasicCompatible(stack, output))
             return false; // Something else is obstructing the output.
 
         int chance = getCurrentMachineTier().getFocusChance();
@@ -92,7 +93,7 @@ public class DraftingTableBE extends AbstractMachineBE {
             if(!expectedTag.isEmpty())
                 stack.set(DataComponents.CUSTOM_DATA, CustomData.of(expectedTag));
         } else{
-            if(isAdvancedCompatible(stack, output, expectedTag))
+            if(ItemUtils.isAdvancedCompatible(stack, output, expectedTag))
                 stack.setCount(stack.getCount() + output.getCount());
             else
                 return false; // The current output is the same item but has different NBT, so we can't create the new output.
