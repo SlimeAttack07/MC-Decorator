@@ -11,6 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import slimeattack07.decorator.Decorator;
 import slimeattack07.decorator.block.ModBlockEntities;
@@ -71,7 +73,7 @@ public class DecorationCrafterBE extends AbstractMachineBE{
 
         // Only stage 4 actually produces output, so before that we don't have to do any checking for the output slot.
         if(stage >= 4){
-            if(!isBasicCompatible(stack, output))// Something else is obstructing the output.
+            if(!ItemUtils.isBasicCompatible(stack, output))// Something else is obstructing the output.
                 return false;
 
             if(stack.isEmpty())
@@ -81,23 +83,8 @@ public class DecorationCrafterBE extends AbstractMachineBE{
         }
 
         Map<ItemLike, Integer> countsMap = recipe.getStageInputsAsMap(stage);
-        // Consume the inputs by going from last to first material input slot. This leaves behind a neater inventory than doing it in normal order.
-        for(int i = OUTPUT_SLOT - 1; i > INSTRUCTIONS_INPUT_SLOT; i--){
-            ItemStack materialStack = ItemUtils.getStackInSlot(itemHandler, i);
-            Integer requiredAmount = countsMap.get(materialStack.getItem());
 
-            if(requiredAmount != null){ // If null, then this item is not required for the recipe we've just crafted.
-                int usedAmount = Math.min(materialStack.getCount(), requiredAmount);
-                ItemUtils.extractFromSlot(itemHandler, i, usedAmount);
-                countsMap.computeIfPresent(materialStack.getItem(), (key, oldRequired) -> {
-                    int stillRequired = oldRequired - usedAmount;
-
-                    return stillRequired > 0 ? stillRequired : null; // Returning null removes the mapping, indicating we've consumed everything we need to for this item.
-                });
-            }
-        }
-
-        if(countsMap.isEmpty()){
+        if(ItemUtils.consumeItems(itemHandler, countsMap, INSTRUCTIONS_INPUT_SLOT + 1, OUTPUT_SLOT - 1)){
             if(stage >= 4){ // Final stage succeeded, create output.
                 ItemUtils.setStackInSlot(itemHandler, OUTPUT_SLOT, stack);
                 stage = 1;
@@ -108,7 +95,7 @@ public class DecorationCrafterBE extends AbstractMachineBE{
         else{
             Decorator.LOGGER.warn("Failed to extract all required items. Remaining items that still needed extraction: " + countsMap);
             stage = 1;
-            // TODO: Generate a 'Botched Creation' when I've implemented that.
+
             return true;
         }
 
@@ -205,5 +192,18 @@ public class DecorationCrafterBE extends AbstractMachineBE{
     protected void setUnknownForContainerData(int i, int value) {
         if(i == 4)
             DecorationCrafterBE.this.stage = value;
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+
+        output.putInt("decorator.stage", stage);
+    }
+
+    @Override protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+
+        stage = input.getIntOr("decorator.stage", 0);
     }
 }

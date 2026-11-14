@@ -16,7 +16,7 @@ import slimeattack07.decorator.util.MachineTier;
 public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractContainerScreen<T> {
     private final Identifier guiTexture = getGuiTexture();
     private final Identifier progressIconTexture = getProgressIconTexture();
-    private final Identifier warningIconTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/warning.png");
+    protected static final Identifier warningIconTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/warning.png");
 
     private static final Identifier basicMachineTierTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/basic.png");
     private static final Identifier experiencedMachineTierTexture = Identifier.fromNamespaceAndPath(Decorator.MOD_ID,"textures/gui/experienced.png");
@@ -67,7 +67,7 @@ public abstract class AbstractScreen<T extends AbstractMenu> extends AbstractCon
         }
     }
 
-    private void renderWarningIcon(GuiGraphics guiGraphics, int x, int y){
+    protected void renderWarningIcon(GuiGraphics guiGraphics, int x, int y){
         if(menu.showWarningIcon()){
             SlotLocation location = getWarningIconTopLeft();
             render(guiGraphics, warningIconTexture,x + location.x(), y + location.y(), 0, 0, 16, 16, 16, 16);

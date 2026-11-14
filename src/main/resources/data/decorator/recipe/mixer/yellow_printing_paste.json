@@ -2,11 +2,11 @@
   "type": "decorator:mixer",
   "inputs": [
 	  {
-		  "item":  "minecraft:flint",
+		  "ingredient":  "minecraft:flint",
 		  "count": 2
 	  },
 	  {
-		  "item":  "minecraft:yellow_dye",
+		  "ingredient":  "minecraft:yellow_dye",
 		  "count": 4
 	  }
   ], 

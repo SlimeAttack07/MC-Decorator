@@ -4,32 +4,29 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import slimeattack07.decorator.Decorator;
 import slimeattack07.decorator.util.ItemUtils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public record MixerRecipe(List<SizedIngredient> inputs, ItemStack output, Optional<ItemStack> byProduct, int stepDuration) implements Recipe<MixerRecipeInput> {
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.create(); // Don't use this method.
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
 
-        return list;
+    @Override public RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     @Override
@@ -54,16 +51,6 @@ public record MixerRecipe(List<SizedIngredient> inputs, ItemStack output, Option
     }
 
     @Override
-    public boolean canCraftInDimensions(int i, int i1) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return output;
-    }
-
-    @Override
     public RecipeSerializer<? extends Recipe<MixerRecipeInput>> getSerializer() {
         return ModRecipes.MIXER_SERIALIZER.get();
     }
@@ -75,7 +62,7 @@ public record MixerRecipe(List<SizedIngredient> inputs, ItemStack output, Option
 
     public static class Serializer implements RecipeSerializer<MixerRecipe> {
         public static final MapCodec<MixerRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            SizedIngredient.FLAT_CODEC.listOf().fieldOf("inputs").forGetter(MixerRecipe::inputs),
+            SizedIngredient.NESTED_CODEC.listOf().fieldOf("inputs").forGetter(MixerRecipe::inputs),
             ItemStack.CODEC.fieldOf("result").forGetter(MixerRecipe::output),
             ItemStack.CODEC.optionalFieldOf("byProduct").forGetter(MixerRecipe::byProduct),
             Codec.INT.fieldOf("stepDuration").forGetter(MixerRecipe::stepDuration)

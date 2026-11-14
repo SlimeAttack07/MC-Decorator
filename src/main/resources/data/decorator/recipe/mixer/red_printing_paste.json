@@ -2,11 +2,11 @@
   "type": "decorator:mixer",
   "inputs": [
 	  {
-		  "item":  "minecraft:water_bucket",
+		  "ingredient":  "minecraft:water_bucket",
 		  "count": 1
 	  },
 	  {
-		  "item":  "minecraft:red_dye",
+		  "ingredient":  "minecraft:red_dye",
 		  "count": 3
 	  }
   ], 

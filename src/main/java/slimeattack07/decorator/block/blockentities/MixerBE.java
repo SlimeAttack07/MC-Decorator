@@ -1,8 +1,7 @@
 package slimeattack07.decorator.block.blockentities;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,6 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import slimeattack07.decorator.block.ModBlockEntities;
 import slimeattack07.decorator.recipe.MixerRecipe;
@@ -217,8 +218,8 @@ public class MixerBE extends AbstractMachineBE {
         if(!ItemUtils.isSlotEmpty(itemHandler, 6) || !ItemUtils.isSlotEmpty(itemHandler, 7))
             return false; // Something else is blocking the move from chamber two to three.
 
-        ItemStack newOutput = itemHandler.getStackInSlot(4);
-        ItemStack newByproduct = itemHandler.getStackInSlot(5);
+        ItemStack newOutput = ItemUtils.getStackInSlot(itemHandler, 4);
+        ItemStack newByproduct = ItemUtils.getStackInSlot(itemHandler, 5);
 
         Map<ItemLike, Integer> countsMap = ItemUtils.getItemsAsMap(List.of(newOutput, newByproduct));
 
@@ -233,8 +234,8 @@ public class MixerBE extends AbstractMachineBE {
     }
 
     private boolean moveToOutput(){
-        ItemStack newOutput = itemHandler.getStackInSlot(6);
-        ItemStack newByproduct = itemHandler.getStackInSlot(7);
+        ItemStack newOutput = ItemUtils.getStackInSlot(itemHandler, 6);
+        ItemStack newByproduct = ItemUtils.getStackInSlot(itemHandler, 7);
         Map<ItemLike, Integer> countsMap = ItemUtils.getItemsAsMap(List.of(newOutput, newByproduct));
 
         if(!ItemUtils.isBasicCompatible(itemHandler, countsMap, 8, 9))
@@ -313,7 +314,7 @@ public class MixerBE extends AbstractMachineBE {
         if(lastRecipe != null && lastRecipe.matches(recipeInput, level))
             return lastRecipe;
 
-        level.getRecipeManager().getRecipeFor(ModRecipes.MIXER_TYPE.get(), recipeInput, level)
+        ((ServerLevel) this.level).recipeAccess().getRecipeFor(ModRecipes.MIXER_TYPE.get(), recipeInput, level)
             .ifPresentOrElse(holder -> lastRecipe = holder.value(), () -> lastRecipe = null);
 
         // Make sure to update the maxProgress when a new recipe is selected to prevent the first craft's stage 1 from using the wrong maxProgress value.
@@ -323,22 +324,24 @@ public class MixerBE extends AbstractMachineBE {
         return lastRecipe;
     }
 
-    @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
 
-        stageTwoProgress = tag.getInt("stageTwoProgress");
-        stageThreeProgress = tag.getInt("stageThreeProgress");
-        stageTwoMaxProgress = tag.getInt("stageTwoMaxProgress");
-        stageThreeMaxProgress = tag.getInt("stageThreeMaxProgress");
+        stageTwoProgress = input.getIntOr("stageTwoProgress", 0);
+        stageThreeProgress = input.getIntOr("stageThreeProgress", 0);
+        stageTwoMaxProgress = input.getIntOr("stageTwoMaxProgress", 0);
+        stageThreeMaxProgress = input.getIntOr("stageThreeMaxProgress", 0);
     }
 
-    @Override protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
 
-        tag.putInt("stageTwoProgress", stageTwoProgress);
-        tag.putInt("stageThreeProgress", stageThreeProgress);
-        tag.putInt("stageTwoMaxProgress", stageTwoMaxProgress);
-        tag.putInt("stageThreeMaxProgress", stageThreeMaxProgress);
+        output.putInt("stageTwoProgress", stageTwoProgress);
+        output.putInt("stageThreeProgress", stageThreeProgress);
+        output.putInt("stageTwoMaxProgress", stageTwoMaxProgress);
+        output.putInt("stageThreeMaxProgress", stageThreeMaxProgress);
     }
 
     @Override

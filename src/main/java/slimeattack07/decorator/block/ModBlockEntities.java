@@ -26,7 +26,7 @@ public class ModBlockEntities {
         () -> new BlockEntityType<>(DecorationScannerBE::new, ModBlocks.DECORATION_SCANNER.get()));
 
     public static final Supplier<BlockEntityType<MixerBE>> MIXER_BE = BLOCK_ENTITIES.register("mixer_be",
-        () -> BlockEntityType.Builder.of(MixerBE::new, ModBlocks.MIXER.get()).build(null));
+        () -> new BlockEntityType<>(MixerBE::new, ModBlocks.MIXER.get()));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

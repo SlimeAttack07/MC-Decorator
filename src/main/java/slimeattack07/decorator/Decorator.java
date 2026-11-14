@@ -22,6 +22,7 @@ import slimeattack07.decorator.block.ModBlocks;
 import slimeattack07.decorator.block.blockentities.DecorationCrafterBE;
 import slimeattack07.decorator.block.blockentities.DecorationScannerBE;
 import slimeattack07.decorator.block.blockentities.DraftingTableBE;
+import slimeattack07.decorator.block.blockentities.MixerBE;
 import slimeattack07.decorator.component.ModDataComponents;
 import slimeattack07.decorator.item.HasTooltip;
 import slimeattack07.decorator.item.ModCreativeTabs;
@@ -71,6 +72,7 @@ public class Decorator {
         event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntities.DRAFTING_TABLE_BE.get(), DraftingTableBE::getAutomationHandler);
         event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntities.DECORATION_CRAFTER_BE.get(), DecorationCrafterBE::getAutomationHandler);
         event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntities.DECORATION_SCANNER_BE.get(), DecorationScannerBE::getAutomationHandler);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntities.MIXER_BE.get(), MixerBE::getAutomationHandler);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -87,6 +89,7 @@ public class Decorator {
             event.register(ModMenuTypes.DRAFTING_TABLE_MENU.get(), DraftingTableScreen::new);
             event.register(ModMenuTypes.DECORATION_CRAFTER_MENU.get(), DecorationCrafterScreen::new);
             event.register(ModMenuTypes.DECORATION_SCANNER_MENU.get(), DecorationScannerScreen::new);
+            event.register(ModMenuTypes.MIXER_MENU.get(), MixerScreen::new);
         }
 
         @SubscribeEvent
